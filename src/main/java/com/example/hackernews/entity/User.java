@@ -1,25 +1,56 @@
 package com.example.hackernews.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     int id;
     @Column(name = "username")
-    String UserName;
+    String username;
     @Column(name = "password")
-    String Password;
+    String password;
     @Column(name = "email")
-    String Email;
+    String email;
     @Column(name = "created_at")
     Date createdAt;
     @Column(name = "about")
     String about;
     @Column(name = "role")
     String role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    List<Post> posts = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    List<Comment> userComments= new ArrayList<>();
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Comment> getUserComments() {
+        return userComments;
+    }
+
+    public void setUserComments(List<Comment> userComments) {
+        this.userComments = userComments;
+    }
 
     public int getId() {
         return id;
@@ -29,28 +60,28 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return UserName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public Date getCreatedAt() {
