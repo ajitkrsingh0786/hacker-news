@@ -172,3 +172,9 @@ b { color:#333333; }
 
 .big { margin-top:3ex; }
 .small { margin-top:-1.6ex; }
+
+.subtext {
+    font-size: 9pt;
+
+        color: #828282;
+}
