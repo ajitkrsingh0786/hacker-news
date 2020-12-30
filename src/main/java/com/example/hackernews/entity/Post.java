@@ -20,7 +20,7 @@ public class Post {
     String title;
 
     @Column(name = "url")
-    String URL;
+    String url;
 
     @Column(name = "text")
     String text;
@@ -64,12 +64,12 @@ public class Post {
         this.title = title;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getText() {
@@ -109,7 +109,7 @@ public class Post {
         return "Post{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", URL='" + URL + '\'' +
+                ", URL='" + url + '\'' +
                 ", text='" + text + '\'' +
                 ", createdAt=" + createdAt +
                 '}';

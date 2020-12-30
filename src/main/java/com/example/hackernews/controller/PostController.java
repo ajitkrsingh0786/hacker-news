@@ -5,6 +5,7 @@ import com.example.hackernews.services.PostService;
 import com.example.hackernews.services.PostServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,28 @@ public class PostController {
     }
 
     @RequestMapping("/")
-     public String showHomePage(){
+     public String showHomePage(Model model){
+        return getAllPost(1, model);
+    }
+
+    @RequestMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        postService.getAllPost(pageNo,model);
         return "html/index";
     }
 
-    @PostMapping("submitPost")
-    public String submitPost(@ModelAttribute Post post,
-                             @RequestParam(name = "id") String userId){
-        postService.addPost(post,userId);
-        return "added";
+
+    @RequestMapping("/submit")
+    public String showSubmitForm( Model model){
+        Post post = new Post();
+        model.addAttribute("post", post);
+        return "html/submitForm";
+    }
+
+    @PostMapping("/submitPost")
+    public String submitPost(@ModelAttribute Post post){
+        postService.addPost(post);
+        return "redirect:/";
     }
 
     @RequestMapping(name = "removePost",method = RequestMethod.DELETE)
@@ -46,10 +60,9 @@ public class PostController {
     }
 
     @GetMapping("AllPost/{pageNo}")
-    public List getAllPost(@PathVariable(name = "pageNo") String pageNo,
-                           Model model){
+    public String getAllPost(@PathVariable(value = "pageNo") int pageNo, Model model){
         postService.getAllPost(pageNo,model);
-        return (List) model.getAttribute("posts");
+        return "html/index";
     }
 
     @PostMapping("/updatePost")

@@ -5,11 +5,12 @@ import org.springframework.ui.Model;
 
 public interface PostServiceInterface{
 
+    void addPost(Post post);
     void deletePost(String id);
 
     Post getPost(String id);
 
-    void getAllPost(String pageNo, Model model);
+    void getAllPost(int pageNo, Model model);
 
     void updatePost(String title, String postId);
 }

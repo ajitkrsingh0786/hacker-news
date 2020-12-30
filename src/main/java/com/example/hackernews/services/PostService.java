@@ -28,12 +28,12 @@ public class PostService implements PostServiceInterface {
         this.userRepository = userRepository;
     }
 
-    public void addPost(Post post, String userId) {
-        System.out.println(post.getURL());
+    public void addPost(Post post) {
+        System.out.println(post.getUrl());
         System.out.println(post.getText());
-        System.out.println(post.getURL());
+        System.out.println(post.getUrl());
         post.setCreatedAt(new Date(new Date().getTime()));
-        post.setUser(userRepository.getOne(Integer.valueOf(userId)));
+        // post.setUser(userRepository.getOne(Integer.valueOf(userId)));
         postRepository.save(post);
     }
 
@@ -48,9 +48,9 @@ public class PostService implements PostServiceInterface {
     }
 
     @Override
-    public void getAllPost(String pageNo, Model model) {
+    public void getAllPost(int pageNo, Model model) {
         int pageSize = 10;
-        Pageable pageable = PageRequest.of(Integer.parseInt(pageNo) - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Post> pages = postRepository.findAll(pageable);
 
         model.addAttribute("posts", pages.getContent());
