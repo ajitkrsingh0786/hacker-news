@@ -67,7 +67,7 @@
                          <td>
                              <a href="" th:utext="${post.title}"></a>
                          </td>
-                        <span th:each="post, status : ${posts}"></span>
+                        <span th:each="post, status : ${posts}">
                     <tr>
                         <td align="right" valign="top" class="title">
                             <span class="rank" th:utext="${status.count}"></span>
