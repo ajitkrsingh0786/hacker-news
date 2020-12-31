@@ -4,7 +4,6 @@ import com.example.hackernews.entity.Comment;
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.services.CommentService;
 import com.example.hackernews.services.PostService;
-import com.example.hackernews.services.PostServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +34,6 @@ public class CommentController {
 
     @PostMapping("/addComment")
     public String addComment(@ModelAttribute("comment") Comment comment) {
-        System.out.println("Ajit Kumar Singh");
         commentService.saveComment(comment);
         return "redirect:/addCommentForm/" + comment.getPost().getId();
     }

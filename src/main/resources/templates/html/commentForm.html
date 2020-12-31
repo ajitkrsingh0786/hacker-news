@@ -66,9 +66,6 @@
 
                     <tr>
                         <td width="15px"></td>
-
-
-                        </td>
                         <td valign="top" class="votelinks">
                             <center>
                                 <a href="">
@@ -116,6 +113,19 @@
                             </form>
                         </td>
                     </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <span th:each="comment1 : ${comment.post.comments}">
+                     <tr >
+                         <td colspan="2">^.</td>
+                         <td th:utext="${comment1.message}">
+                     </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td><a href=""  style="height:5px">reply</a></td>
+                        </tr>
+                         <tr class="spacer" style="height:5px"></tr>
+                    </span>
                     </tbody>
                 </table>
             </td>
