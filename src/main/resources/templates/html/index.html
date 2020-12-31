@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
     <style>
         .votearrow {
   width:      12px;
@@ -14,10 +17,8 @@
 .votelinks.nosee div.votearrow.rotate180 {
   display: none;
 }
+
     </style>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
 <center>
@@ -76,7 +77,7 @@
             <td>
                 <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
                     <tbody>
-                        <span th:each="post, status : ${posts}">
+                    <span th:each="post, status : ${posts}">
                     <tr>
                         <td align="right" valign="top" class="title">
                             <span class="rank" th:utext="${status.count}"></span>
@@ -84,13 +85,13 @@
                         </td>
                         <td valign="top" class="votelinks">
                             <center>
-                                <a th:href="@{'/upVotePost?postId='+${post.getId()}+'&userId='+${post.getUser().getId()}}">
+                                <a th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${post.user}}">
                                 <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
                         </td>
                         <td class="title">
-                            <a href="" class="storylink" th:utext="${post.title}"></a>
+                            <a  th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
                             <span
                                     class="sitebit comhead">
                                 (<a href="from?site=visa.com">
@@ -103,7 +104,7 @@
                         <td colspan="2"></td>
                         <td class="subtext">
                             <span class="score">313 points</span> by <a href="user?id=enjoyyourlife"
-                                                                                            class="hnuser">enjoyyourlife</a>
+                                                                        class="hnuser">enjoyyourlife</a>
                             <span class="age"><a href="item?id=25576113">8 hours ago</a></span> <span
                                 id="unv_25576113"></span> | <a
                                 href="hide?id=25576113&amp;auth=a0bba646ffce305a661c9d34b689507dc5588c4e&amp;goto=news"
@@ -144,7 +145,8 @@
                     <br>
                     <br>
                     <form method="get" th:action="@{/search}">Search:
-                        <input type="text" th:name="searchKeyword" value="" size="17" autocorrect="off" spellcheck="false" autocapitalize="off" autocomplete="false">
+                        <input type="text" th:name="searchKeyword" value="" size="17" autocorrect="off"
+                               spellcheck="false" autocapitalize="off" autocomplete="false">
                     </form>
 
                 </center>
