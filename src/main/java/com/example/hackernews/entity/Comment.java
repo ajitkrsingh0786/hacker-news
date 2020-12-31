@@ -8,9 +8,10 @@ import java.util.Date;
 public class Comment {
     @Id
     @Column(name = "id", nullable = false,unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     @Column(name = "message")
-    String Message;
+    String message;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,11 +35,11 @@ public class Comment {
     }
 
     public String getMessage() {
-        return Message;
+        return message;
     }
 
     public void setMessage(String message) {
-        Message = message;
+        this.message = message;
     }
 
     public User getUser() {

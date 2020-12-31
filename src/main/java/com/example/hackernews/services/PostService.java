@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class PostService implements PostServiceInterface {
@@ -29,9 +30,7 @@ public class PostService implements PostServiceInterface {
     }
 
     public void addPost(Post post) {
-        System.out.println(post.getUrl());
-        System.out.println(post.getText());
-        System.out.println(post.getUrl());
+
         post.setCreatedAt(new Date(new Date().getTime()));
         // post.setUser(userRepository.getOne(Integer.valueOf(userId)));
         postRepository.save(post);
@@ -67,4 +66,12 @@ public class PostService implements PostServiceInterface {
         post.setUpdatedAt(new Date(new Date().getTime()));
         postRepository.save(post);
     }
+
+    @Override
+    public Post getPostById(int postId) {
+        Optional<Post> optional = postRepository.findById(postId);
+        return optional.orElse(null);
+    }
+
+
 }

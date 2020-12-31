@@ -13,4 +13,6 @@ public interface PostServiceInterface{
     void getAllPost(int pageNo, Model model);
 
     void updatePost(String title, String postId);
+
+    Post getPostById(int postId);
 }
