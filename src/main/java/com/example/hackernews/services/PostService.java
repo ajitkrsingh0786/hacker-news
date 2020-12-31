@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -49,7 +50,8 @@ public class PostService implements PostServiceInterface {
     @Override
     public void getAllPost(int pageNo, Model model) {
         int pageSize = 10;
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
         Page<Post> pages = postRepository.findAll(pageable);
 
         model.addAttribute("posts", pages.getContent());

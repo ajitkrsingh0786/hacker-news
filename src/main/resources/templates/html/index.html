@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <style>
+        .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+    </style>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
@@ -70,7 +84,7 @@
                         </td>
                         <td valign="top" class="votelinks">
                             <center>
-                                <a href="">
+                                <a th:href="@{'/upVotePost?postId='+${post.getId()}+'&userId='+${post.getUser().getId()}}">
                                 <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
@@ -105,8 +119,37 @@
             </td>
         </tr>
         <tr style="height:12px;"></tr>
-
         </tbody>
+
+        <tr>
+            <td>
+                <img src="s.gif" height="10" width="0">
+                <table width="100%" cellspacing="0" cellpadding="1">
+                    <tr>
+                        <td bgcolor="#ff6600"></td>
+                    </tr>
+                </table>
+                <br>
+                <center>
+                    <span class="yclinks">
+                        <a href="#">Guidelines</a>
+                        | <a href="">FAQ</a>
+                        | <a href="">Lists</a>
+                        | <a href="https://github.com/HackerNews/API">API</a>
+                        | <a href="#">Security</a>
+                        | <a href="http://www.ycombinator.com/legal/">Legal</a>
+                        | <a href="http://www.ycombinator.com/apply/">Apply to YC</a>
+                        | <a href="mailto:hn@ycombinator.com">Contact</a>
+                    </span>
+                    <br>
+                    <br>
+                    <form method="get" th:action="@{/search}">Search:
+                        <input type="text" th:name="searchKeyword" value="" size="17" autocorrect="off" spellcheck="false" autocapitalize="off" autocomplete="false">
+                    </form>
+
+                </center>
+            </td>
+        </tr>
     </table>
 </center>
 </body>

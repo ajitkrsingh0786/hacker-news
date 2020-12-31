@@ -36,6 +36,7 @@ public class User {
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     List<Comment> userComments= new ArrayList<>();
 
+
     public List<Post> getPosts() {
         return posts;
     }

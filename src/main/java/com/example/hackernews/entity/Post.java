@@ -40,6 +40,7 @@ public class Post {
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     List<Comment> comments = new ArrayList<>();
 
+
     public User getUser() {
         return user;
     }
