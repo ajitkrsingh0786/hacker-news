@@ -2,23 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Submit Form</title>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
-    <style>
-        .votearrow {
-  width:      12px;
-  height:     12px;
-  border:     0px;
-  margin:     3px 2px 6px;
-  background: url("../images/grayarrow.gif")
-  no-repeat;
-}
-
-.votelinks.nosee div.votearrow.rotate180 {
-  display: none;
-}
-
-    </style>
 </head>
 <body>
 <center>
@@ -44,7 +29,7 @@
                               |
                             <a href="">threads</a>
                              |
-                            <a th:href="@{/pastPosts}">past</a>
+                            <a href="">past</a>
                              |
                             <a href="">comments</a>
                              |
@@ -74,29 +59,22 @@
         </tr>
         <tr id="pagespace" title="Show" style="height:10px;"></tr>
         <tr>
+
             <td>
                 <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
                     <tbody>
-                    <span th:each="post, status : ${posts}">
+
                     <tr>
-                        <td align="right" valign="top" class="title">
-                            <span class="rank" th:utext="${status.count}"></span>
-                            <span>.</span>
-                        </td>
+                        <td width="15px"></td>
                         <td valign="top" class="votelinks">
                             <center>
-                                <a th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${post.user}}">
-                                <div class='votearrow' title='upvote'></div>
+                                <a href="">
+                                    <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
                         </td>
                         <td class="title">
-                            <span th:if= "${post.url != null  and post.url !=''}">
-                            <a  th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
-                            </span>
-                             <span th:if= "${post.url == null  or post.url ==''}">
-                                 <a th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>
-                             </span>
+                            <a href="" class="storylink" th:utext="${post.title}"></a>
                             <span
                                     class="sitebit comhead">
                                 (<a href="from?site=visa.com">
@@ -118,15 +96,13 @@
                         </td>
                     </tr>
                     <tr class="spacer" style="height:5px"></tr>
-                    </span>
-
                     </tbody>
                 </table>
             </td>
         </tr>
         <tr style="height:12px;"></tr>
-        </tbody>
 
+        </tbody>
         <tr>
             <td>
                 <img src="s.gif" height="10" width="0">
@@ -150,8 +126,7 @@
                     <br>
                     <br>
                     <form method="get" th:action="@{/search}">Search:
-                        <input type="text" th:name="searchKeyword" value="" size="17" autocorrect="off"
-                               spellcheck="false" autocapitalize="off" autocomplete="false">
+                        <input type="text" th:name="searchKeyword" value="" size="17" autocorrect="off" spellcheck="false" autocapitalize="off" autocomplete="false">
                     </form>
 
                 </center>

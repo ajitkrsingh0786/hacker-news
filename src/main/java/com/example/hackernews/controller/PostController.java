@@ -66,4 +66,10 @@ public class PostController {
         return "Post Updated";
     }
 
+    @RequestMapping("/item/{postId}")
+    public String getPostById(@PathVariable(value = "postId") int postId, Model model) {
+            model.addAttribute("post",postService.getPostById(postId));
+            return "html/item";
+    }
+
 }
