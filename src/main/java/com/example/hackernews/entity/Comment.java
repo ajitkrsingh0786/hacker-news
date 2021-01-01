@@ -23,6 +23,7 @@ public class Comment {
 
     @Column(name = "created_at")
     Date createdAt;
+
     @Column(name = "updated_at")
     Date updatedAt;
 
