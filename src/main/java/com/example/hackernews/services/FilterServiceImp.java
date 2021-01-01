@@ -1,19 +1,15 @@
 package com.example.hackernews.services;
 
-import com.example.hackernews.entity.Post;
 import com.example.hackernews.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.thymeleaf.util.DateUtils;
 
-import javax.xml.crypto.Data;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class FilterServiceImp implements FilterService {
