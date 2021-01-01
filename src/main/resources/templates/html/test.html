@@ -1,4 +1,4 @@
-<html lang="en" op="news">
+<html lang="en" op="news" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta name="referrer" content="origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,22 +11,7 @@
     <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
         <tr>
             <td bgcolor="#ff6600">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
-                    <tr>
-                        <td style="width:18px;padding-right:4px"><a href="https://news.ycombinator.com"><img
-                                src="y18.gif" width="18" height="18" style="border:1px white solid;"></a></td>
-                        <td style="line-height:12pt; height:10px;"><span class="pagetop"><b class="hnname"><a
-                                href="news">Hacker News</a></b>
-              <a href="newswelcome.html">welcome</a> | <a href="newest">new</a> | <a href="threads?id=ajitkrsingh0786">threads</a> | <a
-                                    href="front">past</a> | <a href="newcomments">comments</a> | <a href="ask">ask</a> | <a
-                                    href="show">show</a> | <a href="jobs">jobs</a> | <a href="submit">submit</a>            </span>
-                        </td>
-                        <td style="text-align:right;padding-right:4px;"><span class="pagetop">
-                              <a id='me' href="user?id=ajitkrsingh0786">ajitkrsingh0786</a>                (1) |
-                <a id='logout' href="logout?auth=a9a13de75f0f69b421de4596e0ce1821a47e9b62&amp;goto=news">logout</a>                          </span>
-                        </td>
-                    </tr>
-                </table>
+                <div th:replace="html/header :: header"></div>
             </td>
         </tr>
         <tr id="pagespace" title="" style="height:10px"></tr>
