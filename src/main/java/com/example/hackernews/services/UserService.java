@@ -10,9 +10,10 @@ import java.util.Date;
 
 @Service
 public class UserService implements UserServiceInterface{
-
-    final String USER_ROLE="ROLE_USER";
+    @Autowired
     UserRepository userRepository;
+    final String USER_ROLE="ROLE_USER";
+
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -22,7 +23,7 @@ public class UserService implements UserServiceInterface{
     public void addUser(User user) {
         user.setRole(USER_ROLE);
         user.setCreatedAt(new Date(new Date().getTime()));
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+      //  user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
