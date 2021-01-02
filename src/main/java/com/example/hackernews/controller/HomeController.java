@@ -40,4 +40,5 @@ public class HomeController {
         model.addAttribute("userComment", userComment);
         return "html/thread";
     }
+
 }

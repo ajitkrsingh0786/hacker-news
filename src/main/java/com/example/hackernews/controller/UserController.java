@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/loginPage")
+    @GetMapping("/login")
     public String loginPage(Model model){
         User user = new User();
         model.addAttribute("user", user);

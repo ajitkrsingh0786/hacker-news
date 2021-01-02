@@ -29,7 +29,11 @@ public class MyUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.id = user.getId();
         this.authorities =
-                Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+                Arrays.
+                        stream(user.getRole().split(",")).
+                        map(SimpleGrantedAuthority::new).
+                        collect(Collectors.toList());
+        System.out.println(authorities+"authority");
     }
 
 

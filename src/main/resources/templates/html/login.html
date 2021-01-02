@@ -10,9 +10,12 @@
 <b>Login</b>
 <br>
 <br>
-<form method="post">
-    Username: <input type="text" style="margin-bottom: 10px;" th:name="username"><br>
-    Password:  <input type="password" style="margin-bottom: 10px;" th:name="password"><br>
+<form method="post" action="#" th:action="@{/login}">
+    <div th:if="${param.error}" style="color:red;">
+        Invalid username and password.
+    </div>
+    Username: <input type="text" style="margin-bottom: 10px;" name="username" required="required"><br>
+    Password:  <input type="password" style="margin-bottom: 10px;" name="password" required="required"><br>
     <input type="submit" style="margin-bottom: 10px;" value="login">
 </form>
 <a href="forgot">Forgot your password?</a>
