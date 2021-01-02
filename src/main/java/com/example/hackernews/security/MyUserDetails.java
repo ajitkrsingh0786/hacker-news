@@ -16,6 +16,7 @@ public class MyUserDetails implements UserDetails {
 
     private String password;
     private String username;
+    private int id;
 
     private List<GrantedAuthority> authorities;
 
@@ -26,6 +27,7 @@ public class MyUserDetails implements UserDetails {
 
         this.username=user.getUsername();
         this.password = user.getPassword();
+        this.id = user.getId();
         this.authorities =
                 Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
@@ -45,6 +47,10 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

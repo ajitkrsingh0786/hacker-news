@@ -12,7 +12,7 @@ import java.util.List;
 public class Post {
 
     @Id
-    @Column(name = "id",nullable = false,unique = true)
+    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
@@ -37,7 +37,7 @@ public class Post {
     User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Comment> comments = new ArrayList<>();
 
 
@@ -107,12 +107,6 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", URL='" + url + '\'' +
-                ", text='" + text + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Post{" + "id=" + id + ", title='" + title + '\'' + ", URL='" + url + '\'' + ", text='" + text + '\'' + ", createdAt=" + createdAt + '}';
     }
 }

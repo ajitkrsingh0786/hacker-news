@@ -1,8 +1,10 @@
 package com.example.hackernews.controller;
 
 import com.example.hackernews.entity.Post;
+import com.example.hackernews.security.MyUserDetails;
 import com.example.hackernews.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +38,8 @@ public class PostController {
     }
 
     @PostMapping("/submitPost")
-    public String submitPost(@ModelAttribute Post post){
-        postService.addPost(post);
+    public String submitPost(@ModelAttribute Post post, @AuthenticationPrincipal MyUserDetails userDetails){
+        postService.addPost(post, userDetails);
         return "redirect:/";
     }
 

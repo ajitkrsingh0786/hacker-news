@@ -29,7 +29,7 @@ public class User {
     String role;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Post> posts = new ArrayList<>();
 
     @JsonIgnore
