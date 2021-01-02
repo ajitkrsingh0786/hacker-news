@@ -1,4 +1,4 @@
-package security;
+package com.example.hackernews.security;
 
 import com.example.hackernews.entity.User;
 import com.example.hackernews.repository.UserRepository;
@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
+
     @Autowired
     UserRepository userRepository;
 
@@ -20,6 +21,8 @@ public class MyUserDetailsService implements UserDetailsService {
         Optional<User> user = userRepository.findByUsername(s);
 
         user.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + s));
-        return user.map(MyUserDetails::new).get();
+        return new MyUserDetails(user.get());
+//        return user.map(MyUserDetails::new).get();
+//        return user.map(MyUserDetails::new).get();
     }
 }

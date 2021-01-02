@@ -1,4 +1,4 @@
-package security;
+package com.example.hackernews.security;
 
 import com.example.hackernews.entity.User;
 import org.springframework.security.core.GrantedAuthority;
