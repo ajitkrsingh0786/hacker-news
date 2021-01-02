@@ -9,14 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("myUserDetailsService")
+   // @Qualifier("myUserDetailsService")
     @Autowired
-    private UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
 
 
     @Override
@@ -27,13 +28,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/").authenticated().and().
+        http.authorizeRequests().antMatchers("/writePost").hasAnyRole("ADMIN", "USER")
+            .antMatchers("/").permitAll().and().formLogin();
+
+        http.authorizeRequests().antMatchers("/submit","/addComment").hasAnyRole("ADMIN", "USER").antMatchers("/").permitAll().and().
         formLogin().permitAll().and().
         logout().permitAll();
     }
 
+
     @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+   /* @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 }

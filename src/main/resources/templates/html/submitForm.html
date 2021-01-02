@@ -33,6 +33,10 @@
         <tr>
             <td>
                 <form action="#" th:action="@{/submitPost}" th:object="${post}" method="POST">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{user}">
+                    <input type="hidden" th:field="*{comments}">
+
                     <table border="0">
                         <tbody>
                         <tr>

@@ -21,9 +21,9 @@
 <b>Create Account</b>
 <br>
 <br>
-<form method="post" th:action="@{/addUser}" >
-    Username: <input style="margin-bottom: 10px;" type="text" th:name="username"><br>
-    Password:  <input type="password" style="margin-bottom: 10px;" th:name="password"><br>
+<form th:action="@{/addUser}" th:object="${user}" method="POST">
+    Username: <input style="margin-bottom: 10px;" type="text"  th:field="*{username}"><br>
+    Password:  <input type="password" style="margin-bottom: 10px;" th:field="*{password}"><br>
     <input type="submit" value="Create Account" style="margin-bottom: 10px;">
 </form>
 </body>

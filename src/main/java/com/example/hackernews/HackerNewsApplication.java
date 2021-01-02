@@ -1,8 +1,8 @@
 package com.example.hackernews;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 //@EnableAutoConfiguration(
 //		exclude = {org.springframework.boot.autoconfigure.com.example.hackernews.security.servlet.SecurityAutoConfiguration.class})

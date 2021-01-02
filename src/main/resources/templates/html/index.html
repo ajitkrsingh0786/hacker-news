@@ -34,60 +34,17 @@
         <tr id="pagespace" title="Show" style="height:10px;"></tr>
         <tr>
             <td>
-                <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
-                    <tbody>
-                    <span th:each="post, status : ${posts}">
-                    <tr>
-                        <td align="right" valign="top" class="title">
-                            <span class="rank" th:utext="${status.count}"></span>
-                            <span>.</span>
-                        </td>
-                        <td valign="top" class="votelinks">
-                            <center>
-                                <a th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${post.user}}">
-                                <div class='votearrow' title='upvote'></div>
-                                </a>
-                            </center>
-                        </td>
-                        <td class="title">
-                            <span th:if="${post.url != null  and post.url !=''}">
-                            <a th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
-                            </span>
-                             <span th:if="${post.url == null  or post.url ==''}">
-                                 <a th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>
-                             </span>
-                            <span
-                                    class="sitebit comhead">
-                                (<a th:href="${post.url}" >
-                                <span class="sitestr" th:utext="${post.url}">visa.com</span>
-                                </a>)
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td class="subtext">
-                            <span class="score">313 points</span> by
-                            <a href="user?id=enjoyyourlife" th:utext="${post.user.username}" class="hnuser">enjoyyourlife</a>
-                            <span class="age">
-                                <a href="item?id=25576113" th:utext="${post.createdAt}">8 hours ago</a>
-                            </span>
-                            <span id="unv_25576113"></span> |
-                            <a href="">hide</a> |
-                            <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
-                        </td>
-                    </tr>
-                    <tr class="spacer" style="height:5px"></tr>
-                    </span>
-                    </tbody>
-                </table>
+                <div th:replace="html/postsList :: postsList"></div>
             </td>
         </tr>
         <tr style="height:12px;"></tr>
         </tbody>
+
         <tr>
             <td>
+
                 <div th:replace="html/footer :: footer"></div>
+
             </td>
         </tr>
     </table>

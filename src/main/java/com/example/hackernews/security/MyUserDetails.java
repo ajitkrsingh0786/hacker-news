@@ -6,33 +6,38 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private Integer id;
+
     private String password;
     private String username;
-    private String role;
+    private int id;
+
+    private List<GrantedAuthority> authorities;
 
     public MyUserDetails() {
     }
 
     public MyUserDetails(User user) {
-        this.id = user.getId();
+
         this.username=user.getUsername();
         this.password = user.getPassword();
-        this.role = user.getRole();
+        this.id = user.getId();
+        this.authorities =
+                Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-        list.add(new SimpleGrantedAuthority(role));
-        return list;
+        return  authorities;
     }
+
 
     @Override
     public String getPassword() {
@@ -42,6 +47,10 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

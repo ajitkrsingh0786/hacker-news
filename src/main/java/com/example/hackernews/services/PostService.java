@@ -3,6 +3,7 @@ package com.example.hackernews.services;
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
+import com.example.hackernews.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,10 +31,16 @@ public class PostService implements PostServiceInterface {
         this.userRepository = userRepository;
     }
 
-    public void addPost(Post post) {
+    public void addPost(Post post, MyUserDetails userDetails) {
+        if (post.getUser() == null && post.getCreatedAt()==null) {
+            post.setUser(userRepository.findById(userDetails.getId()).get());
+            post.setCreatedAt(new Date(new Date().getTime()));
+        }
 
-        post.setCreatedAt(new Date(new Date().getTime()));
-        // post.setUser(userRepository.getOne(Integer.valueOf(userId)));
+        if(post.getId() > 0){
+            post.setCreatedAt(postRepository.findById(post.getId()).get().getCreatedAt());
+        }
+        post.setUpdatedAt(new Date(new Date().getTime()));
         postRepository.save(post);
     }
 

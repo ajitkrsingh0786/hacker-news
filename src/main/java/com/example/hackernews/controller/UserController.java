@@ -4,6 +4,7 @@ import com.example.hackernews.entity.User;
 import com.example.hackernews.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -17,7 +18,9 @@ public class UserController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(){
+    public String loginPage(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
         return "html/login";
     }
 
