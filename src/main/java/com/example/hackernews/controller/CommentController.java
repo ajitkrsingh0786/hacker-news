@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CommentController {
+
     PostService postService;
     @Autowired
     CommentService commentService;
@@ -60,4 +61,6 @@ public class CommentController {
         model.addAttribute("postId", postId);
         return "html/addComment";
     }
+
+
 }

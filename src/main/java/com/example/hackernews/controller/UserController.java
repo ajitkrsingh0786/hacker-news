@@ -45,4 +45,12 @@ public class UserController {
         return userService.changePassword(oldPassword,newPassword,id);
     }
 
+    @PostMapping("/update")
+    public String update(@RequestParam("username") String username,
+                         @RequestParam(name = "about",required = false,defaultValue = "") String about,
+                         @RequestParam(name = "email",required = false,defaultValue = "") String email){
+        System.out.println(userService.updateUserDetails(username,about,email));
+        return "redirect:/";
+    }
+
 }

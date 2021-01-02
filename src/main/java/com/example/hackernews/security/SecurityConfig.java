@@ -1,4 +1,4 @@
-package security;
+package com.example.hackernews.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,9 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+<<<<<<< HEAD:src/main/java/security/SecurityConfig.java
         http.authorizeRequests().antMatchers("/writePost").hasAnyRole("ADMIN", "USER")
             .antMatchers("/").permitAll().and().formLogin();
 
+=======
+
+        http.authorizeRequests().antMatchers("/").authenticated().and().
+        formLogin().permitAll().and().
+        logout().permitAll();
+>>>>>>> 003990e43e301d930e48d7e99708315e14fc6120:src/main/java/com/example/hackernews/security/SecurityConfig.java
     }
 
 

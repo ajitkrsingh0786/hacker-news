@@ -46,4 +46,16 @@ public class UserService implements UserServiceInterface{
         }
     }
 
+    public String updateUserDetails(String username, String about, String email) {
+        if(userRepository.findByEmail(email).isPresent()){
+            return "Email ID Already Present";
+        }else {
+            User userToUpdate = userRepository.findByUsername(username).get();
+            userToUpdate.setEmail(email);
+            userToUpdate.setAbout(about);
+            userRepository.save(userToUpdate);
+            return "Details Saved";
+        }
+
+    }
 }
