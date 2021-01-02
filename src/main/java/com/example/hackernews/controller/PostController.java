@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
+
 @Controller
 public class PostController {
      PostService postService;
@@ -61,11 +64,11 @@ public class PostController {
         return "html/index";
     }
 
-    @PostMapping("/updatePost")
-    public String updatePost(@RequestParam(name = "title") String title,
-                             @RequestParam(name = "postId") String postId){
-        postService.updatePost(title,postId);
-        return "Post Updated";
+    @RequestMapping("/showFormForUpdate/{postId}")
+    public String showFormForUpdate(@PathVariable(value = "postId") int postId, Model model) {
+        Post post = postService.getPostById(postId);
+        model.addAttribute("post", post);
+        return "html/submitForm";
     }
 
     @RequestMapping("/item/{postId}")

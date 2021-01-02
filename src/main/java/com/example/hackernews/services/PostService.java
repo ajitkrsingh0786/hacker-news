@@ -32,8 +32,15 @@ public class PostService implements PostServiceInterface {
     }
 
     public void addPost(Post post, MyUserDetails userDetails) {
-        post.setUser(userRepository.findById(userDetails.getId()).get());
-        post.setCreatedAt(new Date(new Date().getTime()));
+        if (post.getUser() == null && post.getCreatedAt()==null) {
+            post.setUser(userRepository.findById(userDetails.getId()).get());
+            post.setCreatedAt(new Date(new Date().getTime()));
+        }
+
+        if(post.getId() > 0){
+            post.setCreatedAt(postRepository.findById(post.getId()).get().getCreatedAt());
+        }
+        post.setUpdatedAt(new Date(new Date().getTime()));
         postRepository.save(post);
     }
 

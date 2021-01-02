@@ -49,7 +49,21 @@
                              |
                             <a th:href="@{/pastPosts}">past</a>
                             |
+                             <span class="pagetop" sec:authorize="isAnonymous()">
                             <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
+                             </span>
+                            <span class="pagetop" sec:authorize="isAuthenticated()">
+                                  <span th:if="${#authentication.getPrincipal().getId() == post.user.id}">
+                                      <a th:href="@{/showFormForUpdate/{postId}(postId=${post.id})}">edit</a>
+                                      |
+                                      <a href="">delete</a>
+                                  </span>
+                                  <span th:if="${#authentication.getPrincipal().getId() != post.user.id}">
+                                       <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
+                                  </span>
+                            </span>
+
+
                         </td>
                     </tr>
                     <tr class="spacer" style="height:5px"></tr>
