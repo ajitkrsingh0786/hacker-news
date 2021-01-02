@@ -58,8 +58,8 @@
                              </span>
                             <span
                                     class="sitebit comhead">
-                                (<a href="from?site=visa.com">
-                                <span class="sitestr">visa.com</span>
+                                (<a th:href="${post.url}" >
+                                <span class="sitestr" th:utext="${post.url}">visa.com</span>
                                 </a>)
                             </span>
                         </td>
@@ -67,30 +67,27 @@
                     <tr>
                         <td colspan="2"></td>
                         <td class="subtext">
-                            <span class="score">313 points</span> by <a href="user?id=enjoyyourlife"
-                                                                        class="hnuser">enjoyyourlife</a>
-                            <span class="age"><a href="item?id=25576113">8 hours ago</a></span> <span
-                                id="unv_25576113"></span> | <a
-                                href="hide?id=25576113&amp;auth=a0bba646ffce305a661c9d34b689507dc5588c4e&amp;goto=news"
-                                onclick="return hidestory(event, this, 25576113)">hide</a> |
+                            <span class="score">313 points</span> by
+                            <a href="user?id=enjoyyourlife" th:utext="${post.user.username}" class="hnuser">enjoyyourlife</a>
+                            <span class="age">
+                                <a href="item?id=25576113" th:utext="${post.createdAt}">8 hours ago</a>
+                            </span>
+                            <span id="unv_25576113"></span> |
+                            <a href="">hide</a> |
                             <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
                         </td>
                     </tr>
                     <tr class="spacer" style="height:5px"></tr>
                     </span>
-
                     </tbody>
                 </table>
             </td>
         </tr>
         <tr style="height:12px;"></tr>
         </tbody>
-
         <tr>
             <td>
-
                 <div th:replace="html/footer :: footer"></div>
-
             </td>
         </tr>
     </table>
