@@ -29,7 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests().
-                antMatchers("/submit","/addComment","/upVotePost").
+                antMatchers("/submit","/addComment",
+                        "/upVotePost","/downVotePost",
+                        "/hidePost", "/unHidePost","/hidden").
                 hasAnyRole("ADMIN", "USER").
                 antMatchers("/").permitAll().and().
                 formLogin().loginPage("/login").permitAll().

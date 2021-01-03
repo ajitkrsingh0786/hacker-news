@@ -4,6 +4,8 @@ import com.example.hackernews.entity.Post;
 import com.example.hackernews.security.MyUserDetails;
 import org.springframework.ui.Model;
 
+import java.security.Principal;
+
 public interface PostServiceInterface{
 
     void addPost(Post post, MyUserDetails userDetails);
@@ -11,7 +13,7 @@ public interface PostServiceInterface{
 
     Post getPost(String id);
 
-    void getAllPost(int pageNo, Model model);
+    void getAllPost(int pageNo, Model model, Principal principal);
 
     void updatePost(String title, String postId);
 

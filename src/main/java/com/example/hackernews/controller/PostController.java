@@ -2,6 +2,7 @@ package com.example.hackernews.controller;
 
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.security.MyUserDetails;
+import com.example.hackernews.services.LikeService;
 import com.example.hackernews.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,12 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class PostController {
+
      PostService postService;
+     LikeService likeService;
+
+     @Autowired
+    public void setLikeService(LikeService likeService) {
+        this.likeService = likeService;
+    }
 
     @Autowired
     public void setPostService(PostService postService) {
@@ -22,13 +31,17 @@ public class PostController {
     }
 
     @RequestMapping("/")
-     public String showHomePage(Model model){
-        return getAllPost(1, model);
+     public String showHomePage(Model model, Principal principal){
+        if(principal != null) {
+            System.out.println(principal.getName());
+        }
+        return getAllPost(1, model,principal);
+
     }
 
     @RequestMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        postService.getAllPost(pageNo,model);
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model,Principal principal) {
+        postService.getAllPost(pageNo,model,principal);
         return "html/index";
     }
 
@@ -59,8 +72,8 @@ public class PostController {
     }
 
     @GetMapping("AllPost/{pageNo}")
-    public String getAllPost(@PathVariable(value = "pageNo") int pageNo, Model model){
-        postService.getAllPost(pageNo,model);
+    public String getAllPost(@PathVariable(value = "pageNo") int pageNo, Model model,Principal principal){
+        postService.getAllPost(pageNo,model,principal);
         return "html/index";
     }
 
