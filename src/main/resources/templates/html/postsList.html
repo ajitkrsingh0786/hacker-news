@@ -10,15 +10,19 @@
     <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
         <tbody>
         <span th:each="post, status : ${posts}">
+            <div th:if="${not #arrays.contains(hidePosts,post.id)}">
                     <tr>
                         <td align="right" valign="top" class="title">
                             <span class="rank" th:utext="${status.count}"></span>
                             <span>.</span>
                         </td>
-                        <td valign="top" class="votelinks">
-                            <center>
-                                <a th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${post.user.id}}">
-                                <div class='votearrow' title='upvote'></div>
+                        <td  valign="top" class="votelinks">
+                            <center th:if="${userLikes == null or not #arrays.contains(userLikes,post.id)}">
+                                <a sec:authorize="isAnonymous()" th:href="@{/login}">
+                                    <div class='votearrow' title='upvote'></div>
+                                </a>
+                                <a sec:authorize="isAuthenticated()" th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">
+                                    <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
                         </td>
@@ -40,13 +44,16 @@
                     <tr>
                         <td colspan="2"></td>
                         <td class="subtext">
-                            <span class="score">313 points</span> by
+                            <span class="score" th:utext="${post.point}+' points'">313 points</span> by
                             <a href="user?id=enjoyyourlife" class="hnuser" th:utext="${post.user.username}"></a>
                             <span class="age">
                                 <a href="" th:utext="${post.createdAt}">8 hours ago</a>
                             </span>
+                            <span id="unv_25614324" sec:authorize="isAuthenticated()" th:if="${#arrays.contains(userLikes,post.id)}"> |
+                                <a id='un_25614324'  href="#" th:href="@{'/downVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">unvote</a>
+                            </span>
                             <span id="unv_25576113"> </span> |
-                            <a href="#" >hide</a>
+                            <a th:href="@{'/hidePost?postId='+${post.id}+'&goTo='+${#httpServletRequest.requestURI}}" >hide</a>
                              |
                             <a th:href="@{/pastPosts}">past</a>
                             |
@@ -66,6 +73,7 @@
                         </td>
                     </tr>
                     <tr class="spacer" style="height:5px"></tr>
+            </div>
                     </span>
         </tbody>
     </table>

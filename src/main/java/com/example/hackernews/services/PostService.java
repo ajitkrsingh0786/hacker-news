@@ -1,6 +1,9 @@
 package com.example.hackernews.services;
 
 import com.example.hackernews.entity.Post;
+import com.example.hackernews.entity.User;
+import com.example.hackernews.repository.HideRepository;
+import com.example.hackernews.repository.LikeRepository;
 import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
 import com.example.hackernews.security.MyUserDetails;
@@ -12,7 +15,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +26,18 @@ public class PostService implements PostServiceInterface {
 
     UserRepository userRepository;
     PostRepository postRepository;
+    LikeRepository likeRepository;
+    HideRepository hideRepository;
+
+    @Autowired
+    public void setHideRepository(HideRepository hideRepository) {
+        this.hideRepository = hideRepository;
+    }
+
+    @Autowired
+    public void setLikeRepository(LikeRepository likeRepository) {
+        this.likeRepository = likeRepository;
+    }
 
     @Autowired
     public void setPostRepository(PostRepository postRepository) {
@@ -55,7 +73,7 @@ public class PostService implements PostServiceInterface {
     }
 
     @Override
-    public void getAllPost(int pageNo, Model model) {
+    public void getAllPost(int pageNo, Model model, Principal principal) {
         int pageSize = 10;
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
         Page<Post> pages = postRepository.findAll(pageable);
@@ -65,6 +83,15 @@ public class PostService implements PostServiceInterface {
         model.addAttribute("isFirst", pages.isFirst());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", pages.getTotalPages());
+        model.addAttribute("hiddenPost",new ArrayList<Integer>());
+        if(principal!= null){
+            String username = principal.getName();
+            User user = userRepository.findByUsername(username).get();
+            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
+            System.out.println(hideRepository.findAllByUserId(user.getId()).size()+" =>LIKES");
+            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
+            model.addAttribute("userLikes",userLikes);
+        }
     }
 
     @Override
