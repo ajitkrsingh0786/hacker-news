@@ -17,7 +17,7 @@ public class Post {
     int id;
 
     @Column(name = "point")
-    Integer point;
+    Integer point=0;
 
     @Column(name = "title")
     String title;

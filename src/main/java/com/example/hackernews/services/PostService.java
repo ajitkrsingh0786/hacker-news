@@ -83,12 +83,11 @@ public class PostService implements PostServiceInterface {
         model.addAttribute("isFirst", pages.isFirst());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", pages.getTotalPages());
-        model.addAttribute("hiddenPost",new ArrayList<Integer>());
+        model.addAttribute("hidePosts",new ArrayList<Integer>());
         if(principal!= null){
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            System.out.println(hideRepository.findAllByUserId(user.getId()).size()+" =>LIKES");
             model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
             model.addAttribute("userLikes",userLikes);
         }
