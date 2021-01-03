@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserServiceInterface{
@@ -33,29 +34,27 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public String changePassword(String oldPassword, String newPassword,String id) {
-        User user = userRepository.getOne(Integer.valueOf(id));
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        if(encoder.matches(oldPassword, user.getPassword())){
-            user.setPassword(encoder.encode(newPassword));
+    public String changePassword(String oldPassword, String newPassword,int userId) {
+        User user = userRepository.findById(userId).get();
+        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if(oldPassword.equals(user.getPassword())){
+            user.setPassword(newPassword);
             userRepository.save(user);
-            return "Password Changed";
-        }else {
-            return "Password Not Matches";
+            return "";
         }
+        return "Current password incorrect. Please try again.";
     }
 
-    public String updateUserDetails(String username, String about, String email) {
-        if(userRepository.findByEmail(email).isPresent()){
-            return "Email ID Already Present";
-        }else {
-            User userToUpdate = userRepository.findByUsername(username).get();
-            userToUpdate.setEmail(email);
-            userToUpdate.setAbout(about);
-            userRepository.save(userToUpdate);
-            return "Details Saved";
-        }
+    public void updateUserDetails(User user) {
+        User preUser = userRepository.findById(user.getId()).get();
+        preUser.setEmail(user.getEmail());
+        preUser.setAbout(user.getAbout());
+        userRepository.save(preUser);
+    }
 
+    @Override
+    public User getUserById(int userId) {
+        Optional<User> optional = userRepository.findById(userId);
+        return optional.orElse(null);
     }
 }

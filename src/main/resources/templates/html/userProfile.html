@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="../css/main.css"/>
 </head>
 
 <body>
@@ -10,8 +11,7 @@
     <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
         <tr>
             <td bgcolor="#ff6600">
-                <!-- HEADER GOES HERE -->
-
+                <div th:replace="html/header :: header"></div>
             </td>
         </tr>
         <tr id="pagespace" title="Profile: vinayak2110" style="height:10px"></tr>
@@ -31,21 +31,21 @@
                         </td>
                     </tr>
                 </table>
-                <form class="profileform" method="post" th:action="@{/update}">
-                    <input type="hidden" name="username" value="vinayak2110">
+                <form class="profileform"  th:action="@{/update}" th:object="${user}" method="POST">
+                    <input type="hidden" th:field="*{id}">
                     <table border="0">
                         <tr class='athing'>
                             <td valign="top">user:</td>
-                            <td timestamp="1609152229">
-                                <a href="user?id=vinayak2110" class="hnuser">
-                                    <font color="#3c963c">vinayak2110</font>
+                            <td>
+                                <a th:href="@{/userProfile/{userId}(userId=${user.id})}" class="hnuser">
+                                    <font color="#3c963c" th:utext="${user.username}"></font>
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td valign="top">created:</td>
+                            <td>created:</td>
                             <td>
-                                <a href="front?day=2020-12-28&birth=vinayak2110">4 days ago</a>
+                                <a th:href="@{/pastPosts}" th:utext="${user.createdAt}">4 days ago</a>
                             </td>
                         </tr>
                         <tr>
@@ -55,11 +55,10 @@
                         <tr>
                             <td valign="top">about:</td>
                             <td>
-                                <textarea cols="60" rows="5" wrap="virtual" th:name="about"></textarea>
+                                <textarea cols="60" rows="5"   th:field="*{about}" ></textarea>
                                 <font size="-2">
                                     <a href="formatdoc" tabindex="-1">
                                         <font color="#afafaf">help</font>
-
                                     </a>
                                 </font>
                             </td>
@@ -67,7 +66,7 @@
                         <tr>
                             <td valign="top">email:</td>
                             <td>
-                                <input type="text" th:name="email" value="" size="60">
+                                <input type="text" th:field="*{email}" size="60">
                             </td>
                         </tr>
                         <tr>
@@ -109,7 +108,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <a href="changepw">
+                                <a th:href="@{/changePasswordForm/{userId}(userId=${user.id})}">
                                     <u>change password</u>
                                 </a>
                             </td>

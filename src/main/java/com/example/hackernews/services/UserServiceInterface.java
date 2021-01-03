@@ -1,10 +1,15 @@
 package com.example.hackernews.services;
 
+import com.example.hackernews.entity.User;
+
 public interface UserServiceInterface {
 
     void deleteUser(String id);
 
-    String changePassword(String oldPassword, String newPassword,String id);
+    String changePassword(String oldPassword, String newPassword,int userId);
 
-    public String updateUserDetails(String username, String about, String email);
+    void updateUserDetails(User user);
+
+    User getUserById(int userId);
+
 }

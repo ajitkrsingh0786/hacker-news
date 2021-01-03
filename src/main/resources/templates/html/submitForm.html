@@ -42,14 +42,21 @@
                         <tr>
                             <td>title</td>
                             <td>
-                                <input type="text" th:field="*{title}" name="title" size="50">
+                                <input type="text" th:field="*{title}" name="title" size="50" required>
                                 <span style="margin-left:10px"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>Url</td>
                             <td>
+                                <span th:if= "${#strings.isEmpty(post.title)}">
                                 <input type="text" th:field="*{url}" name="url" size="50">
+                                </span>
+                                <span th:if= "${not #strings.isEmpty(post.title)}">
+                                   <input type="text" th:field="*{url}" name="url" size="50" disabled>
+                                </span>
+
+
                             </td>
                         </tr>
                         <tr>

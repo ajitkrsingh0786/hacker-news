@@ -18,7 +18,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model){
+    public String loginPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "html/login";
@@ -26,31 +26,50 @@ public class UserController {
 
 
     @PostMapping("/addUser")
-    public String addUser(@ModelAttribute User user){
+    public String addUser(@ModelAttribute User user) {
         userService.addUser(user);
 
         return "redirect:/";
     }
 
     @PostMapping("/deleteUser")
-    public String deleteUser(@RequestParam(name = "id") String id){
+    public String deleteUser(@RequestParam(name = "id") String id) {
         userService.deleteUser(id);
         return "deleted";
     }
 
-    @PostMapping("/changePassword")
-    public String changePassword(@RequestParam(name = "oldPassword") String oldPassword,
-                                 @RequestParam(name = "newPassword") String newPassword,
-                                 @RequestParam(name = "id" ) String id){
-        return userService.changePassword(oldPassword,newPassword,id);
+    @RequestMapping("/changePasswordForm/{userId}")
+    public String changePasswordForm(@PathVariable(value = "userId") int userId, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        return "html/changePassword";
+    }
+
+    @PostMapping("/changePassword/{userId}")
+    public String changePassword(@RequestParam(name = "oldPassword") String oldPassword, @RequestParam(name =
+            "newPassword") String newPassword, @PathVariable(value = "userId") int userId, Model model) {
+        String successMessage = userService.changePassword(oldPassword, newPassword, userId);
+        if(successMessage.equals("")){
+          return  "redirect:/";
+        }
+
+        model.addAttribute("user", userService.getUserById(userId));
+        model.addAttribute("successMessage", successMessage);
+        return "html/changePassword";
+
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam("username") String username,
-                         @RequestParam(name = "about",required = false,defaultValue = "") String about,
-                         @RequestParam(name = "email",required = false,defaultValue = "") String email){
-        System.out.println(userService.updateUserDetails(username,about,email));
-        return "redirect:/";
+    public String update(@ModelAttribute User user) {
+        userService.updateUserDetails(user);
+        return "redirect:/userProfile/" + user.getId();
+    }
+
+    @RequestMapping("/userProfile/{userId}")
+    public String userProfile(Model model, @PathVariable(value = "userId") int userId) {
+        System.out.println(userId);
+        User user = userService.getUserById(userId);
+        model.addAttribute("user", user);
+        return "html/userProfile";
     }
 
 }

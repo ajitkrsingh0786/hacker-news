@@ -57,7 +57,6 @@ public class PostService implements PostServiceInterface {
     @Override
     public void getAllPost(int pageNo, Model model) {
         int pageSize = 10;
-
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
         Page<Post> pages = postRepository.findAll(pageable);
 
