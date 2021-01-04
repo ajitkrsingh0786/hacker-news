@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 @Service
 public class FilterServiceImp implements FilterService {
@@ -24,7 +23,7 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = ""+calendar.getTime();
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy");
+        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy", Locale.ENGLISH);
         Date newDate= format.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
