@@ -15,11 +15,17 @@ import java.security.Principal;
 import java.util.List;
 
 @Service
-public class HideServiceImp implements HideService{
+public class HideServiceImp implements HideService {
 
     UserRepository userRepository;
     HideRepository hideRepository;
+    LikeRepository likeRepository;
     PostRepository postRepository;
+
+    @Autowired
+    public void setLikeRepository(LikeRepository likeRepository) {
+        this.likeRepository = likeRepository;
+    }
 
     @Autowired
     public void setPostRepository(PostRepository postRepository) {
@@ -38,7 +44,7 @@ public class HideServiceImp implements HideService{
 
     @Override
     public void hidePost(String postId, Principal principal) {
-        if(principal != null){
+        if (principal != null) {
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             HidePost hidePost = new HidePost();
@@ -50,23 +56,26 @@ public class HideServiceImp implements HideService{
 
     @Override
     public void unHidePost(String postId, Principal principal) {
-        if(principal != null){
+        if (principal != null) {
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
-            HidePost hidePost= hideRepository.findAllByPostIdAndUserId(
-                    Integer.valueOf(postId),user.getId());
+            HidePost hidePost = hideRepository.findAllByPostIdAndUserId(
+                    Integer.valueOf(postId), user.getId());
             hideRepository.delete(hidePost);
         }
     }
 
     @Override
     public void getHidden(Principal principal, Model model) {
-        if(principal != null){
+        if (principal != null) {
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             List<Integer> hidePosts = hideRepository.findAllByUserId(user.getId());
             List<Post> posts = postRepository.findPostByPostId(hidePosts);
-            System.out.println(posts.size()+" ==> postId Size");
+            System.out.println(posts.size() + " ==> postId Size");
+//            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
+            model.addAttribute("userLikes",likeRepository.findAllByUserId(user.getId()));
+            model.addAttribute("posts", posts);
         }
     }
 }

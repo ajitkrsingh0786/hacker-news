@@ -28,7 +28,7 @@
                         </td>
                         <td class="title">
                             <span th:if="${post.url != null  and post.url !=''}">
-                            <a th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
+                                <a th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
                             </span>
                              <span th:if="${post.url == null  or post.url ==''}">
                                  <a th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>

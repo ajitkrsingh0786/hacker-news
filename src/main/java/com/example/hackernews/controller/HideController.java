@@ -38,6 +38,6 @@ public class HideController {
     @RequestMapping("/hidden")
     public String getHidden(Principal principal, Model model){
         hideService.getHidden(principal,model);
-        return "redirect:/";
+        return "html/hiddenPost";
     }
 }

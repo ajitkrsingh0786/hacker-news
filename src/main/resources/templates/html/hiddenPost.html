@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <title>Hidden Post</title>
+    <style>
+        .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+
+
+    </style>
+</head>
+<body>
+
+<center>
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+        <tr>
+            <td bgcolor="#ff6600">
+                <div th:replace="html/header :: header"></div>
+            </td>
+        </tr>
+        <tr id="pagespace" title="hidden" style="height:10px"></tr>
+        <tr th:each="post : ${posts}">
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+                    <tr class='athing' id='25622199'>
+                        <td align="right" valign="top" class="title">
+                            <span class="rank" th:utext="${posts.indexOf(post)+1}"></span>
+                        </td>
+                        <td valign="top" class="votelinks">
+                            <center th:if="${userLikes == null or not #arrays.contains(userLikes,post.id)}">
+                                <a sec:authorize="isAuthenticated()" th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">
+                                    <div class='votearrow' title='upvote'></div>
+                                </a>
+                            </center>
+                        </td>
+                        <td class="title">
+                            <span th:if="${post.url != null  and post.url !=''}">
+                                <a th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
+                            </span>
+                            <span th:if="${post.url == null  or post.url ==''}">
+                                 <a th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>
+                            </span>
+                            <span class="sitebit comhead"> (
+                                <a th:href="${post.url}">
+                                    <span class="sitestr" th:utext="${post.url}">zdnet.com</span>
+                                </a>)
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="subtext">
+                            <span class="score" id="score_25622199" th:utext="${post.point}+' points'">3 points</span> by
+                            <a href="user?id=ohjeez" class="hnuser" th:utext="${post.user.username}">ohjeez</a>
+                            <span class="age">
+                                <a href="item?id=25622199" th:utext="${post.createdAt}">17 hours ago</a>
+                            </span>
+                            <span id="unv_25614324" sec:authorize="isAuthenticated()" th:if="${#arrays.contains(userLikes,post.id)}"> |
+                                <a id='un_25614324'  href="#" th:href="@{'/downVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">unvote</a>
+                            </span>
+                            <span id="unv_25622199"></span> |
+                            <a th:href="@{'/unHidePost?postId='+${post.id}+'&goTo='+${#httpServletRequest.requestURI}}">un-hide</a>|
+                            <span th:if="${#authentication.getPrincipal().getId() != post.user.id}">
+                                <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div th:replace="html/footer :: footer"></div>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>
