@@ -7,6 +7,7 @@ import com.example.hackernews.repository.LikeRepository;
 import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
 import com.example.hackernews.security.MyUserDetails;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -74,6 +75,7 @@ public class PostService implements PostServiceInterface {
 
     @Override
     public void getAllPost(int pageNo, Model model, Principal principal) {
+
         int pageSize = 10;
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
         Page<Post> pages = postRepository.findAll(pageable);
@@ -84,6 +86,13 @@ public class PostService implements PostServiceInterface {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", pages.getTotalPages());
         model.addAttribute("hidePosts",new ArrayList<Integer>());
+
+        List<String> timeAgo = new ArrayList<>();
+        for(Post post : pages.getContent()){
+            PrettyTime prettyTime = new PrettyTime();
+            timeAgo.add(prettyTime.format(post.getCreatedAt()));
+        }
+        model.addAttribute("timeAgo",timeAgo);
         if(principal!= null){
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();

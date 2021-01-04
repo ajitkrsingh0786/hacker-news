@@ -7,11 +7,13 @@ import com.example.hackernews.repository.HideRepository;
 import com.example.hackernews.repository.LikeRepository;
 import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,6 +76,12 @@ public class HideServiceImp implements HideService {
             List<Post> posts = postRepository.findPostByPostId(hidePosts);
             System.out.println(posts.size() + " ==> postId Size");
 //            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
+            List<String> timeAgo = new ArrayList<>();
+            for(Post post : posts){
+                PrettyTime prettyTime = new PrettyTime();
+                timeAgo.add(prettyTime.format(post.getCreatedAt()));
+            }
+            model.addAttribute("timeAgo",timeAgo);
             model.addAttribute("userLikes",likeRepository.findAllByUserId(user.getId()));
             model.addAttribute("posts", posts);
         }

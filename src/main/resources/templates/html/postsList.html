@@ -47,7 +47,7 @@
                             <span class="score" th:utext="${post.point}+' points'">313 points</span> by
                             <a href="user?id=enjoyyourlife" class="hnuser" th:utext="${post.user.username}"></a>
                             <span class="age">
-                                <a href="" th:utext="${post.createdAt}">8 hours ago</a>
+                                <a href="" th:utext="${timeAgo.get(posts.indexOf(post))}">8 hours ago</a>
                             </span>
                             <span id="unv_25614324" sec:authorize="isAuthenticated()" th:if="${#arrays.contains(userLikes,post.id)}"> |
                                 <a id='un_25614324'  href="#" th:href="@{'/downVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">unvote</a>
