@@ -49,11 +49,13 @@ public class CommentServiceImp implements CommentService {
     public void saveReplyComment(Comment comment, MyUserDetails userDetails, int parentCommentId) {
         Comment parentComment = commentRepository.findById(parentCommentId).get();
         comment.setPost(parentComment.getPost());
+        comment.setCreatedAt(new Date(new Date().getTime()));
         comment.setUser(userRepository.findById(userDetails.getId()).get());
         comment.setParentComment(parentComment);
-        Comment newComment = commentRepository.save(comment);
+        Comment newComment =  commentRepository.save(comment);
         List<Comment> childList = parentComment.getChildComments();
         childList.add(newComment);
+        parentComment.setChildComments(childList);
         commentRepository.save(parentComment);
     }
 }
