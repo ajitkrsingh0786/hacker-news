@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <style>
+        .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+
+
+    </style>
+</head>
+<body>
+<center>
+    <div th:fragment="replyComments" th:remove="tag">
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f6f6ef" style="padding:10px;">
+        <tbody>
+        <span th:each="comment2:${comment1.childComments}">
+           <tr>
+               <td colspan="2">^.</td>
+               <td th:utext="${comment2.message}">
+           </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td><a th:href="@{/replyComment/{commentId}(commentId=${comment2.id})}" style="height:5px">reply</a></td>
+            </tr>
+            <tr class="spacer" style="height:5px"></tr>
+        </span>
+        <div th:with="comment1 = ${comment2}"
+            th:include="html/replyCommentsList :: replyComments" th:remove="tag"></div>
+        </tbody>
+    </table>
+    </div>
+</center>
+>
+</body>
+</html>

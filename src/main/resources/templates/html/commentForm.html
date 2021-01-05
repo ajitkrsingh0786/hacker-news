@@ -57,12 +57,13 @@
                         <td colspan="2"></td>
                         <td>
                             <form action="#" th:action="@{/addComment}" th:object="${comment}" method="POST">
-                                <input type="hidden" th:field="*{post}" >
+                                <input type="hidden" th:field="*{post}">
                                 <textarea name="text" th:field="*{message}" rows="6" cols="60"></textarea>
                                 <br>
                                 <br>
                                 <span class="subtext">If you haven't already, would you mind reading
-                                   about HN's <a href="newswelcome.html"><u>approach to comments</u></a>and <a href="newsguidelines.html"><u>site guidelines</u></a>?
+                                   about HN's <a href="newswelcome.html"><u>approach to comments</u></a>and <a
+                                            href="newsguidelines.html"><u>site guidelines</u></a>?
                                  </span>
                                 <br>
                                 <br>
@@ -73,18 +74,21 @@
                     <tr></tr>
                     <tr></tr>
                     <span th:each="comment1 : ${comment.post.comments}">
-                     <tr >
+                     <tr>
                          <td colspan="2">^.</td>
                          <td th:utext="${comment1.message}">
                      </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}"  style="height:5px">reply</a></td>
+                            <td><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}" style="height:5px">reply</a></td>
                         </tr>
-                        <tr th:if="${not #lists.isEmpty(comment1.childComments)}">
-                            <span th:each="c : ${comment1.childComments}">
-                                <td th:utext="${c.message}"></td>
-                            </span>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td></td>
+                             <td>
+                                  <div th:replace="html/replyCommentsList :: replyComments" ></div>
+                             </td>
+
                         </tr>
                          <tr class="spacer" style="height:5px"></tr>
                     </span>
