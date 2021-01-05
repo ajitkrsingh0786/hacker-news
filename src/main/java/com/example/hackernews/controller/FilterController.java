@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,20 +20,20 @@ public class FilterController {
     FilterService filterService;
 
     @RequestMapping("/pastPosts")
-    public String pastDayPosts(@Param("date") String date , Model model) throws ParseException {
-        filterService.getAllBeforeDay(date, model);
+    public String pastDayPosts(@Param("date") String date , Model model, Principal principal) throws ParseException {
+        filterService.getAllBeforeDay(date, model,principal);
         return "html/past";
     }
 
     @RequestMapping("/pastMonthPosts")
-    public String pastMonthPosts(@Param("date") String date , Model model) throws ParseException {
-        filterService.getAllBeforeMonth(date, model);
+    public String pastMonthPosts(@Param("date") String date , Model model, Principal principal) throws ParseException {
+        filterService.getAllBeforeMonth(date, model,principal);
         return "html/past";
     }
 
     @RequestMapping("/pastYearPosts")
-    public String pastYearPosts(@Param("date") String date , Model model) throws ParseException {
-        filterService.getAllBeforeYear(date, model);
+    public String pastYearPosts(@Param("date") String date , Model model, Principal principal) throws ParseException {
+        filterService.getAllBeforeYear(date, model,principal);
         return "html/past";
     }
 

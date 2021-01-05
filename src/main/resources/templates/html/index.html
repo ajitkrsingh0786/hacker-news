@@ -38,6 +38,14 @@
             </td>
         </tr>
         <tr style="height:12px;"></tr>
+        <tr class="spacer" style="height:5px"></tr>
+        <tr  class="morespace" style="height:10px"></tr>
+        <tr style="float:left;" th:if="${not isLast}">
+            <td colspan="2"></td>
+            <td class="title">
+                <a  th:href="@{'/AllPost/'+${currentPage+1}}" class="morelink" rel="next">More</a>
+            </td>
+        </tr>
         </tbody>
 
         <tr>
@@ -47,6 +55,7 @@
 
             </td>
         </tr>
+
     </table>
 </center>
 </body>

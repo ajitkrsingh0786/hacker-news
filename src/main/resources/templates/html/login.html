@@ -25,8 +25,13 @@
 <br>
 <br>
 <form th:action="@{/addUser}" th:object="${user}" method="POST">
-    Username: <input style="margin-bottom: 10px;" type="text"  th:field="*{username}"><br>
-    Password:  <input type="password" style="margin-bottom: 10px;" th:field="*{password}"><br>
+    <span th:if="${isPresent == true}">
+        <div>
+            <h4 style="color:red;">That username is taken. Please choose another.</h4>
+        </div>
+    </span>
+    Username: <input style="margin-bottom: 10px;" type="text"  th:field="*{username}" required="required"><br>
+    Password:  <input type="password" style="margin-bottom: 10px;" th:field="*{password}" required="required"><br>
     <input type="submit" value="Create Account" style="margin-bottom: 10px;">
 </form>
 </body>

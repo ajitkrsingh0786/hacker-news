@@ -23,4 +23,6 @@ public interface PostRepository extends JpaRepository<Post , Integer> {
 
     @Query(value = "SELECT * FROM posts WHERE id in :postsId ", nativeQuery = true)
     List<Post> findPostByPostId(@Param("postsId") List<Integer> postsId);
+
+    List<Post> findAllByUserId(Integer valueOf);
 }

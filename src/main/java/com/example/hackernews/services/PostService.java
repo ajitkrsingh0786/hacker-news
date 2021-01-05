@@ -115,6 +115,4 @@ public class PostService implements PostServiceInterface {
         Optional<Post> optional = postRepository.findById(postId);
         return optional.orElse(null);
     }
-
-
 }
