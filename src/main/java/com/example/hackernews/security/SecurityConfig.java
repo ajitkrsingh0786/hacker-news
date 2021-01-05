@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().
                 antMatchers("/submit","/addComment",
                         "/upVotePost","/downVotePost",
-                        "/hidePost", "/unHidePost","/hidden").
+                        "/hidePost", "/unHidePost","/hidden",
+                        "/upVotedSubmissions").
                 hasAnyRole("ADMIN", "USER").
                 antMatchers("/").permitAll().and().
                 formLogin().loginPage("/login").permitAll().
