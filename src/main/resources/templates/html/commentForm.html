@@ -57,7 +57,7 @@
                                                                         class="hnuser">enjoyyourlife</a>
                             <span class="age"><a href="item?id=25576113">8 hours ago</a></span> <span
                                 id="unv_25576113"></span> | <a
-                                href="hide?id=25576113&amp;auth=a0bba646ffce305a661c9d34b689507dc5588c4e&amp;goto=news"
+                                href=""
                                 onclick="return hidestory(event, this, 25576113)">hide</a> |
                             <a href="item?id=25576113">comments</a>
                         </td>
@@ -116,7 +116,7 @@
                                                  <span th:utext="${comment1.message}"></span>
                                             <div class="reply"> <p>
                                                 <font size="1">
-                                               <u><a href="reply?id=25639803&amp;goto=item%3Fid%3D25634192%2325639803">reply</a></u>
+                                               <u><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}">reply</a></u>
                                                  </font>
                                                </p>
                                             </div>
