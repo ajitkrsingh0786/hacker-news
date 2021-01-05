@@ -5,15 +5,16 @@ import com.example.hackernews.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class UserService implements UserServiceInterface{
+public class UserService implements UserServiceInterface {
     @Autowired
     UserRepository userRepository;
-    final String USER_ROLE="ROLE_USER";
+    final String USER_ROLE = "ROLE_USER";
 
 
     @Autowired
@@ -21,11 +22,19 @@ public class UserService implements UserServiceInterface{
         this.userRepository = userRepository;
     }
 
-    public void addUser(User user) {
-        user.setRole(USER_ROLE);
-        user.setCreatedAt(new Date(new Date().getTime()));
-      //  user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userRepository.save(user);
+    @Override
+    public String addUser(User user,Model model) {
+        if (!userRepository.findByUsername(user.getUsername()).isPresent()){
+            user.setRole(USER_ROLE);
+            user.setCreatedAt(new Date(new Date().getTime()));
+            //  user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            userRepository.save(user);
+            return "redirect:/";
+        }else{
+            model.addAttribute("user",user);
+            model.addAttribute("isPresent",true);
+            return "html/login";
+        }
     }
 
     @Override
@@ -34,10 +43,10 @@ public class UserService implements UserServiceInterface{
     }
 
     @Override
-    public String changePassword(String oldPassword, String newPassword,int userId) {
+    public String changePassword(String oldPassword, String newPassword, int userId) {
         User user = userRepository.findById(userId).get();
         //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if(oldPassword.equals(user.getPassword())){
+        if (oldPassword.equals(user.getPassword())) {
             user.setPassword(newPassword);
             userRepository.save(user);
             return "";
@@ -45,6 +54,7 @@ public class UserService implements UserServiceInterface{
         return "Current password incorrect. Please try again.";
     }
 
+    @Override
     public void updateUserDetails(User user) {
         User preUser = userRepository.findById(user.getId()).get();
         preUser.setEmail(user.getEmail());

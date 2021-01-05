@@ -1,6 +1,7 @@
 package com.example.hackernews.services;
 
 import com.example.hackernews.entity.User;
+import org.springframework.ui.Model;
 
 public interface UserServiceInterface {
 
@@ -11,5 +12,7 @@ public interface UserServiceInterface {
     void updateUserDetails(User user);
 
     User getUserById(int userId);
+
+    public String addUser(User user, Model model);
 
 }
