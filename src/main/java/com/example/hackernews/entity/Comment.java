@@ -2,6 +2,7 @@ package com.example.hackernews.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "comments")
@@ -26,6 +27,13 @@ public class Comment {
 
     @Column(name = "updated_at")
     Date updatedAt;
+
+    @ManyToOne
+    Comment parentComment;
+
+    @OneToMany
+    List<Comment> childComments;
+
 
     public int getId() {
         return id;
@@ -73,5 +81,21 @@ public class Comment {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Comment getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
+    }
+
+    public List<Comment> getChildComments() {
+        return childComments;
+    }
+
+    public void setChildComments(List<Comment> childComments) {
+        this.childComments = childComments;
     }
 }

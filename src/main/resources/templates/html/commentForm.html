@@ -79,7 +79,12 @@
                      </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td><a href=""  style="height:5px">reply</a></td>
+                            <td><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}"  style="height:5px">reply</a></td>
+                        </tr>
+                        <tr th:if="${not #lists.isEmpty(comment1.childComments)}">
+                            <span th:each="c : ${comment1.childComments}">
+                                <td th:utext="${c.message}"></td>
+                            </span>
                         </tr>
                          <tr class="spacer" style="height:5px"></tr>
                     </span>
