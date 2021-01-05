@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <style>
+                .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<center>
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+        <tr>
+            <td bgcolor="#ff6600">
+                <div th:replace="html/header :: header"></div>
+            </td>
+        </tr>
+        <tr id="pagespace" title="Upvoted submissions" style="height:10px"></tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+                    <span th:each="post, status : ${posts}">
+                        <tr class='athing' id='25614324'>
+                            <td align="right" valign="top" class="title">
+                                <span class="rank"  th:utext="${status.count}"></span>
+                            </td>
+                            <td valign="top" class="votelinks">
+                                <center>
+                                    &nbsp;
+                                </center>
+                            </td>
+                            <td class="title">
+                                <span th:if="${post.url != null  and post.url !=''}">
+                                    <a class="storylink" th:href="@{${post.url}}" th:utext="${post.title}"></a>
+                                </span>
+                                <span th:if="${post.url == null  or post.url ==''}">
+                                    <a class="storylink" th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>
+                                </span>
+                                <span class="sitebit comhead"> (
+                                    <a th:href="${post.url}">
+                                        <span class="sitestr" th:utext="${post.url}">nytimes.com</span>
+                                    </a>)
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="subtext">
+                                <span class="score" id="score_25614324" th:utext="${post.point}+' points'">84 points</span> by
+                                <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" class="hnuser" th:utext="${post.user.username}">tin7in</a>
+                                <span class="age">
+                                    <a href="#" th:utext="${timeAgo.get(posts.indexOf(post))}">2 days ago</a>
+                                </span>
+                                <span id="unv_25614324"></span> |
+                                <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">&nbsp;comments</a>
+                            </td>
+                        </tr>
+                        <tr class="spacer" style="height:5px"></tr>
+                    </span>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div th:replace="html/footer :: footer"></div>
+            </td>
+        </tr>
+    </table>
+</center>
+</body>
+</html>

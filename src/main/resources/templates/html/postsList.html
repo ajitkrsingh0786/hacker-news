@@ -35,7 +35,7 @@
                              </span>
                             <span
                                     class="sitebit comhead">
-                                (<a href="${post.url}">
+                                (<a th:href="${post.url}">
                                 <span class="sitestr" th:utext="${post.url}"></span>
                                 </a>)
                             </span>
@@ -45,7 +45,7 @@
                         <td colspan="2"></td>
                         <td class="subtext">
                             <span class="score" th:utext="${post.point}+' points'">313 points</span> by
-                            <a href="user?id=enjoyyourlife" class="hnuser" th:utext="${post.user.username}"></a>
+                            <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" class="hnuser" th:utext="${post.user.username}"></a>
                             <span class="age">
                                 <a href="" th:utext="${timeAgo.get(posts.indexOf(post))}">8 hours ago</a>
                             </span>

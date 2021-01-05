@@ -12,8 +12,6 @@
         <tr>
             <td bgcolor="#ff6600">
                 <div th:replace="html/header :: header"></div>
-
-                <!-- HEADER GOES HERE -->
             </td>
         </tr>
         <tr id="pagespace" title="Profile: vinayak2110" style="height:10px"></tr>
@@ -54,6 +52,7 @@
                             <td valign="top">karma:</td>
                             <td>1 </td>
                         </tr>
+                        <span th:if="${principal!= null and #authentication.getPrincipal().getUsername().equals(user.username)}">
                         <tr>
                             <td valign="top">about:</td>
                             <td>
@@ -118,7 +117,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <a href="submitted?id=vinayak2110">
+                                <a th:href="@{'/submissions?userId='+${user.id}}">
                                     <u>submissions</u>
                                 </a>
                             </td>
@@ -142,7 +141,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <a href="upvoted?id=vinayak2110">
+                                <a th:href="@{'/upVotedSubmissions?userId='+${user.id}}">
                                     <u>upvoted submissions</u>
                                 </a> /
                                 <a href="upvoted?id=vinayak2110&amp;comments=t">
@@ -165,9 +164,40 @@
                                 <span style='font-style:italic'>(shared)</span>
                             </td>
                         </tr>
+                        </span>
+                        <span th:if="${principal==null or not #authentication.getPrincipal().getUsername().equals(user.username)}">
+                            <tr>
+                                <td valign="top">about:</td>
+                                <td th:utext="${user.about}"> </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a th:href="@{'/submissions?userId='+${user.id}}">
+                                        <u>submissions</u>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="">
+                                        <u>comments</u>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="favorites?id=apsec112">
+                                        <u>favorites</u>
+                                    </a>
+                                </td>
+                            </tr>
+                        </span>
                     </table>
                     <br>
-                    <input type="submit" value="update">
+                    <input th:if="${principal != null and #authentication.getPrincipal().getUsername().equals(user.username)}" type="submit" value="update">
                 </form>
                 <br>
                 <br>

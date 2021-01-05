@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
 
@@ -48,8 +50,8 @@ public class UserController {
     public String changePassword(@RequestParam(name = "oldPassword") String oldPassword, @RequestParam(name =
             "newPassword") String newPassword, @PathVariable(value = "userId") int userId, Model model) {
         String successMessage = userService.changePassword(oldPassword, newPassword, userId);
-        if(successMessage.equals("")){
-          return  "redirect:/";
+        if (successMessage.equals("")) {
+            return "redirect:/";
         }
 
         model.addAttribute("user", userService.getUserById(userId));
@@ -65,10 +67,11 @@ public class UserController {
     }
 
     @RequestMapping("/userProfile/{userId}")
-    public String userProfile(Model model, @PathVariable(value = "userId") int userId) {
+    public String userProfile(Model model, @PathVariable(value = "userId") int userId, Principal principal) {
         System.out.println(userId);
         User user = userService.getUserById(userId);
         model.addAttribute("user", user);
+        model.addAttribute("principal",principal);
         return "html/userProfile";
     }
 

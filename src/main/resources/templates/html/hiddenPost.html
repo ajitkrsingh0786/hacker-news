@@ -66,7 +66,7 @@
                         <td colspan="2"></td>
                         <td class="subtext">
                             <span class="score" id="score_25622199" th:utext="${post.point}+' points'">3 points</span> by
-                            <a href="user?id=ohjeez" class="hnuser" th:utext="${post.user.username}">ohjeez</a>
+                            <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" class="hnuser" th:utext="${post.user.username}">ohjeez</a>
                             <span class="age">
                                 <a href="item?id=25622199" th:utext="${timeAgo.get(posts.indexOf(post))}">17 hours ago</a>
                             </span>
