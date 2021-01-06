@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>deletePost</title>
+    <title>Delete post</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-
-
+<center>
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+        <tbody>
+        <tr>
+            <td bgcolor="#ff6600">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
+                    <tbody>
+                    <tr>
+                        <td style="width:18px;padding-right:4px">
+                            <a href="https://news.ycombinator.com">
+                                <span width="18" height="18" style="border:1px white solid;">Y</span>
+                            </a>
+                        </td>
+                        <td style="line-height:12pt; height:10px;"><span class="pagetop"><b>Confirm</b></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr id="pagespace" title="Confirm" style="height:10px"></tr>
+        <tr>
+            <td>
+                <table border="0">
+                    <tbody>
+                    <tr class="athing">
+                        <td align="right" valign="top" class="title"><span class="rank"></span></td>
+                        <td class="votelinks">
+                            <center>
+                                <font color="#ff6600">*</font><br>
+                                <img src="s.gif" height="1" width="14">
+                            </center>
+                        </td>
+                        <td class="title">
+                           <span th:if="${post.url != null  and post.url !=''}">
+                                <a th:href="@{${post.url}}" class="storylink" th:utext="${post.title}"></a>
+                            </span>
+                            <span th:if="${post.url == null  or post.url ==''}">
+                                 <a th:href="@{/item/{postId}(postId=${post.id})}" th:utext="${post.title}"></a>
+                             </span>
+<!--                            <span-->
+<!--                                    class="sitebit comhead">-->
+<!--                                (<a th:href="${post.url}">-->
+<!--                                <span class="sitestr" th:utext="${post.url}"></span>-->
+<!--                                </a>)-->
+<!--                            </span>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="subtext">
+                            <span class="score" id="score_25654197">1 point</span> by <a href="user?id=ajitkrsingh123"
+                                                                                         class="hnuser"><font
+                                color="#3c963c">ajitkrsingh123</font></a> <span class="age"><a href="item?id=25654197">13 minutes ago</a></span>
+                            <span id="unv_25654197"></span> | <a href="edit?id=25654197">edit</a> | <a
+                                href="delete-confirm?id=25654197&amp;goto=delete-confirm%3Fgoto%3Dnewest%26id%3D25654197">delete</a>
+                        </td>
+                    </tr>
+                    <tr style="height:20px"></tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>
+                            <form action="#" th:action="@{/delete/{postId}(postId=${post.id})}"  method="post">
+                                Do you want this to be deleted?
+                                <br><br>
+                                <input type="submit" name="delete" value="Yes">&nbsp;
+                                <input type="submit" name="delete" value="No">
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</center>
+<script type="text/javascript" src="hn.js?KaFq3LpQwiMgXoTa3GrE"></script>
 </body>
-</html>
+</html>>

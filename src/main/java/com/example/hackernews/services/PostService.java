@@ -64,8 +64,8 @@ public class PostService implements PostServiceInterface {
     }
 
     @Override
-    public void deletePost(String id) {
-        postRepository.delete(postRepository.getOne(Integer.valueOf(id)));
+    public void deletePost(int id) {
+         postRepository.deleteById(id);
     }
 
     @Override

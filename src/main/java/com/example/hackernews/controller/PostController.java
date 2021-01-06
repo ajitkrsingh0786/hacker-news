@@ -5,6 +5,7 @@ import com.example.hackernews.security.MyUserDetails;
 import com.example.hackernews.services.LikeService;
 import com.example.hackernews.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,10 +59,18 @@ public class PostController {
         return "redirect:/";
     }
 
-    @RequestMapping(name = "removePost", method = RequestMethod.DELETE)
-    public String deletePost(@RequestParam(name = "id") String id) {
-        postService.deletePost(id);
-        return "Post Deleted";
+    @RequestMapping("/deletePost/{postId}")
+    public String deletePostForm(@PathVariable(value = "postId") int postId, Model model) {
+        model.addAttribute("post", postService.getPostById(postId));
+        return  "html/deletePost";
+    }
+
+    @PostMapping("/delete/{postId}")
+    public String deletePost(@PathVariable(value = "postId") int postId, @Param(value = "delete") String delete) {
+        if(delete.equals("Yes")){
+            postService.deletePost(postId);
+        }
+        return  "redirect:/newest";
     }
 
     @GetMapping("/getPost")
@@ -104,4 +113,5 @@ public class PostController {
         }
         return getAllPost(1, model, principal);
     }
+
 }

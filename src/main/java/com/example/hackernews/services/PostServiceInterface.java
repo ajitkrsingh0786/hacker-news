@@ -9,7 +9,7 @@ import java.security.Principal;
 public interface PostServiceInterface{
 
     void addPost(Post post, MyUserDetails userDetails);
-    void deletePost(String id);
+    void deletePost(int id);
 
     Post getPost(String id);
 

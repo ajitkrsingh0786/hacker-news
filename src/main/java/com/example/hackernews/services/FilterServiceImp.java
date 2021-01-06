@@ -50,7 +50,7 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = ""+calendar.getTime();
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
         Date newDate= format.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
@@ -59,7 +59,6 @@ public class FilterServiceImp implements FilterService {
         model.addAttribute("posts", posts);
         model.addAttribute("date",calendar.getTime());
         model.addAttribute("s", s);
-
         model.addAttribute("hidePosts",new ArrayList<Integer>());
 
         List<String> timeAgo = new ArrayList<>();

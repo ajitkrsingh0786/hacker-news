@@ -16,12 +16,13 @@
                             <span class="rank" th:utext="${status.count}"></span>
                             <span>.</span>
                         </td>
-                        <td  valign="top" class="votelinks">
+                        <td valign="top" class="votelinks">
                             <center th:if="${userLikes == null or not #arrays.contains(userLikes,post.id)}">
                                 <a sec:authorize="isAnonymous()" th:href="@{/login}">
                                     <div class='votearrow' title='upvote'></div>
                                 </a>
-                                <a sec:authorize="isAuthenticated()" th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">
+                                <a sec:authorize="isAuthenticated()"
+                                   th:href="@{'/upVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">
                                     <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
@@ -44,16 +45,19 @@
                     <tr>
                         <td colspan="2"></td>
                         <td class="subtext">
-                            <span class="score" th:utext="${post.point}+' points'">313 points</span> by
-                            <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" class="hnuser" th:utext="${post.user.username}"></a>
+                            <span class="score" th:utext="${post.point}+' points'"> </span> by
+                            <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" class="hnuser"
+                               th:utext="${post.user.username}"></a>
                             <span class="age">
                                 <a href="" th:utext="${timeAgo.get(posts.indexOf(post))}">8 hours ago</a>
                             </span>
-                            <span id="unv_25614324" sec:authorize="isAuthenticated()" th:if="${#arrays.contains(userLikes,post.id)}"> |
-                                <a id='un_25614324'  href="#" th:href="@{'/downVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">unvote</a>
+                            <span id="unv_25614324" sec:authorize="isAuthenticated()"
+                                  th:if="${#arrays.contains(userLikes,post.id)}"> |
+                                <a id='un_25614324' href="#"
+                                   th:href="@{'/downVotePost?postId='+${post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}">unvote</a>
                             </span>
                             <span id="unv_25576113"> </span> |
-                            <a th:href="@{'/hidePost?postId='+${post.id}+'&goTo='+${#httpServletRequest.requestURI}}" >hide</a>
+                            <a th:href="@{'/hidePost?postId='+${post.id}+'&goTo='+${#httpServletRequest.requestURI}}">hide</a>
                              |
                             <a th:href="@{/pastPosts}">past</a>
                             |
@@ -64,7 +68,7 @@
                                   <span th:if="${#authentication.getPrincipal().getId() == post.user.id}">
                                       <a th:href="@{/showFormForUpdate/{postId}(postId=${post.id})}">edit</a>
                                       |
-                                      <a href="">delete</a>
+                                      <a th:href="@{/deletePost/{postId}(postId=${post.id})}">delete</a>
                                   </span>
                                   <span th:if="${#authentication.getPrincipal().getId() != post.user.id}">
                                        <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
