@@ -53,7 +53,7 @@ public class FilterServiceImp implements FilterService {
             date = dateFormat.format(calendar.getTime());
         }
 
-        Date newDate= dateFormat.parse(date);
+        Date newDate= (Date)dateFormat.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
