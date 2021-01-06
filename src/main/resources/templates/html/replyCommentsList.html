@@ -45,11 +45,16 @@
                                       <tr>
                                           <td class="ind"><img src="s.gif" height="1" th:width="${someVariable}"></td>
                                           <td valign="top" class="votelinks">
-                                           <center>
-                                            <a href="">
+                                           <center th:if="${not #arrays.contains(likeCommentsId,comment2.id)}">
+                                            <a th:href="@{'/upVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                                 <div class="votearrow" title="upvote">*</div>
                                             </a>
                                            </center>
+                                              <center th:if="${#arrays.contains(likeCommentsId,comment2.id)}">
+                                                  <a>
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  </a>
+                                              </center>
                                           </td>
                                           <td class="default">
                                               <div style="margin-top:2px; margin-bottom:-10px;">
@@ -57,6 +62,9 @@
                                                    <a href="user?id=wsdrdsw" class="hnuser" th:utext="${comment2.user.username}"></a>
                                                       <span class="age">
                                                            <a href=" " th:utext="${comment2.createdAt}"></a>
+                                                      </span>
+                                                      <span id="unv_25657047" th:if="${#arrays.contains(likeCommentsId,comment2.id)}"> |
+                                                          <a th:href="@{'/downVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>
                                                       </span>
                                                       <span id="unv_25639803"></span>
                                                       <span class="par"></span>

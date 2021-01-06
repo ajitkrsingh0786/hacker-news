@@ -39,19 +39,23 @@
                     <tr>
                         <td width="1px"></td>
                         <td valign="top" class="votelinks">
-                            <center>
-                                <a href="">
+                            <center th:if="${not #arrays.contains(likeCommentsId,comment.id)}">
+                                <a th:href="@{'/upVoteComment/?commentId='+${comment.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                     <div class='votearrow' title='upvote'></div>
+                                </a>
+                            </center>
+                            <center th:if="${#arrays.contains(likeCommentsId,comment.id)}">
+                                <a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                 </a>
                             </center>
                         </td>
                         <td class="title">
                             <a href="" class="storylink" th:utext="${comment.post.title}"></a>
-                            <span
-                                    class="sitebit comhead">
-                                (<a href="from?site=visa.com">
-                                <span class="sitestr">visa.com</span>
-                                </a>)
+                            <span class="sitebit comhead">
+                                (<a th:href="${comment.post.url}">
+                                <span class="sitestr" th:utext="${comment.post.url}">visa.com</span>
+                            </a>)
                             </span>
                         </td>
                     </tr>
@@ -60,10 +64,12 @@
                         <td class="subtext">
                             <span class="score" th:utext="${comment.post.point}"></span> by
                             <a th:href="@{/userProfile/{userId}(userId=${comment.post.user.id})}" class="hnuser" th:utext="${comment.post.user.username}"></a>
-                            <span class="age"><a href="" th:utext="${comment.post.createdAt}"></a></span> <span
-                                id="unv_25576113"></span> |
+                            <span class="age">
+                                <a href="" th:utext="${comment.post.createdAt}"></a>
+                            </span>
+                            <span id="unv_25576113"></span> |
                             <a href="">hide</a> |
-                            <a href="item?id=25576113">comments</a>
+                            <a href="">comments</a>
                         </td>
                     </tr>
                     <tr class="spacer" style="height:5px"></tr>
@@ -95,12 +101,16 @@
                                       <tr>
                                           <td class="ind"><img src="s.gif" height="1" width="0"></td>
                                           <td valign="top" class="votelinks">
-                                          <center>
-                                          <a href="/login">
-                                            <div class="votearrow" title="upvote"></div>
-                                            </a>
-
-                                           </center>
+                                              <center th:if="${not #arrays.contains(likeCommentsId,comment1.id)}">
+                                                  <a th:href="@{'/upVoteComment/?commentId='+${comment1.id}+'&goTo='+${#httpServletRequest.requestURI}}">
+                                                      <div class="votearrow" title="upvote"></div>
+                                                  </a>
+                                              </center>
+                                              <center th:if="${#arrays.contains(likeCommentsId,comment1.id)}">
+                                                  <a>
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  </a>
+                                              </center>
                                           </td>
                                           <td class="default">
                                               <div style="margin-top:2px; margin-bottom:-10px;">
@@ -108,6 +118,9 @@
                                                    <a href="user?id=wsdrdsw" class="hnuser" th:utext="${comment1.user.username}"></a>
                                                       <span class="age">
                                                           <a href=" " th:utext="${comment1.createdAt}"></a>
+                                                      </span>
+                                                      <span id="unv_25657047" th:if="${#arrays.contains(likeCommentsId,comment1.id)}"> |
+                                                          <a th:href="@{'/downVoteComment/?commentId='+${comment1.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>
                                                       </span>
                                                       <span id="unv_25639803"></span>
                                                       <span class="par"></span>

@@ -1,6 +1,7 @@
 package com.example.hackernews.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,16 @@ public class Comment {
     @OneToMany
     List<Comment> childComments;
 
+    @OneToMany(mappedBy = "commentId")
+    List<CommentLike> commentLikes = new ArrayList<>();
+
+    public List<CommentLike> getCommentLikes() {
+        return commentLikes;
+    }
+
+    public void setCommentLikes(List<CommentLike> commentLikes) {
+        this.commentLikes = commentLikes;
+    }
 
     public int getId() {
         return id;

@@ -18,4 +18,6 @@ public interface PostService {
     void updatePost(String title, String postId);
 
     Post getPostById(int postId);
+
+    Post getPostById(int postId, Principal principal,Model model);
 }
