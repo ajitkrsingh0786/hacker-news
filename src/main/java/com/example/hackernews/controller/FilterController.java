@@ -1,7 +1,6 @@
 package com.example.hackernews.controller;
 
-import com.example.hackernews.services.FilterService;
-import com.example.hackernews.services.PostService;
+import com.example.hackernews.services.service.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 public class FilterController {

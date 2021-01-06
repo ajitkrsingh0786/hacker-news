@@ -1,7 +1,8 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.secviceImp;
 
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.repository.PostRepository;
+import com.example.hackernews.services.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -9,7 +10,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 @Service
-public class SearchServiceImp implements SearchService{
+public class SearchServiceImp implements SearchService {
 
     PostRepository postRepository;
 

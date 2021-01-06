@@ -1,12 +1,12 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.secviceImp;
 
 import com.example.hackernews.entity.Comment;
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.entity.User;
 import com.example.hackernews.repository.CommentRepository;
-import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
 import com.example.hackernews.security.MyUserDetails;
+import com.example.hackernews.services.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

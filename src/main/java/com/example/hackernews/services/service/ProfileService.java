@@ -1,4 +1,4 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.service;
 
 import org.springframework.ui.Model;
 

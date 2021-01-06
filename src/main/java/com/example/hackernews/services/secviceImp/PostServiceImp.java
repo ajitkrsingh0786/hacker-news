@@ -1,4 +1,4 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.secviceImp;
 
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.entity.User;
@@ -7,6 +7,7 @@ import com.example.hackernews.repository.LikeRepository;
 import com.example.hackernews.repository.PostRepository;
 import com.example.hackernews.repository.UserRepository;
 import com.example.hackernews.security.MyUserDetails;
+import com.example.hackernews.services.service.PostService;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PostService implements PostServiceInterface {
+public class PostServiceImp implements PostService {
 
     UserRepository userRepository;
     PostRepository postRepository;

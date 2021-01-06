@@ -1,6 +1,6 @@
 package com.example.hackernews.controller;
 
-import com.example.hackernews.services.HideService;
+import com.example.hackernews.services.service.HideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

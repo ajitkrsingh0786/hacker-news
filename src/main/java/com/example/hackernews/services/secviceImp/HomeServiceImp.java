@@ -1,16 +1,17 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.secviceImp;
 
 import com.example.hackernews.entity.Comment;
 import com.example.hackernews.entity.User;
 import com.example.hackernews.repository.CommentRepository;
 import com.example.hackernews.repository.UserRepository;
+import com.example.hackernews.services.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class HomeServiceImp implements HomeService{
+public class HomeServiceImp implements HomeService {
 
     CommentRepository commentRepository;
     UserRepository userRepository;

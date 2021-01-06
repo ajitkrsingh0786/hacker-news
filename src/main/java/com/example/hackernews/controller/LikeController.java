@@ -1,11 +1,10 @@
 package com.example.hackernews.controller;
 
-import com.example.hackernews.services.LikeService;
+import com.example.hackernews.services.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class LikeController {

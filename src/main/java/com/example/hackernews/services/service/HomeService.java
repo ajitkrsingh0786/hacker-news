@@ -1,4 +1,4 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.service;
 
 import com.example.hackernews.entity.Comment;
 

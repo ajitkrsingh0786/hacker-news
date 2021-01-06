@@ -1,4 +1,4 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.service;
 
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.security.MyUserDetails;
@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 
-public interface PostServiceInterface{
+public interface PostService {
 
     void addPost(Post post, MyUserDetails userDetails);
     void deletePost(int id);

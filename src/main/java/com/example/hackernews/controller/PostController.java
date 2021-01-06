@@ -2,8 +2,8 @@ package com.example.hackernews.controller;
 
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.security.MyUserDetails;
-import com.example.hackernews.services.LikeService;
-import com.example.hackernews.services.PostService;
+import com.example.hackernews.services.service.LikeService;
+import com.example.hackernews.services.secviceImp.PostServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class PostController {
 
-    PostService postService;
+    PostServiceImp postServiceImp;
     LikeService likeService;
 
     @Autowired
@@ -27,24 +25,20 @@ public class PostController {
     }
 
     @Autowired
-    public void setPostService(PostService postService) {
-        this.postService = postService;
+    public void setPostService(PostServiceImp postServiceImp) {
+        this.postServiceImp = postServiceImp;
     }
 
     @RequestMapping("/")
     public String showHomePage(Model model, Principal principal) {
-        if (principal != null) {
-             principal.getName();
-        }
         return getAllPost(1, model, principal);
     }
 
     @RequestMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model, Principal principal) {
-        postService.getAllPost(pageNo, model, principal);
+        postServiceImp.getAllPost(pageNo, model, principal);
         return "html/index";
     }
-
 
     @RequestMapping("/submit")
     public String showSubmitForm(Model model) {
@@ -55,62 +49,56 @@ public class PostController {
 
     @PostMapping("/submitPost")
     public String submitPost(@ModelAttribute Post post, @AuthenticationPrincipal MyUserDetails userDetails) {
-        postService.addPost(post, userDetails);
+        postServiceImp.addPost(post, userDetails);
         return "redirect:/";
     }
 
     @RequestMapping("/deletePost/{postId}")
     public String deletePostForm(@PathVariable(value = "postId") int postId, Model model) {
-        model.addAttribute("post", postService.getPostById(postId));
+        model.addAttribute("post", postServiceImp.getPostById(postId));
         return  "html/deletePost";
     }
 
     @PostMapping("/delete/{postId}")
     public String deletePost(@PathVariable(value = "postId") int postId, @Param(value = "delete") String delete) {
         if(delete.equals("Yes")){
-            postService.deletePost(postId);
+            postServiceImp.deletePost(postId);
         }
         return  "redirect:/newest";
     }
 
     @GetMapping("/getPost")
     public String getPost(@RequestParam(name = "id") String id) {
-        Post post = postService.getPost(id);
+        Post post = postServiceImp.getPost(id);
         return post.toString();
     }
 
     @GetMapping("AllPost/{pageNo}")
     public String getAllPost(@PathVariable(value = "pageNo") int pageNo, Model model, Principal principal) {
-        postService.getAllPost(pageNo, model, principal);
+        postServiceImp.getAllPost(pageNo, model, principal);
         return "html/index";
     }
 
     @RequestMapping("/showFormForUpdate/{postId}")
     public String showFormForUpdate(@PathVariable(value = "postId") int postId, Model model) {
-        Post post = postService.getPostById(postId);
+        Post post = postServiceImp.getPostById(postId);
         model.addAttribute("post", post);
         return "html/submitForm";
     }
 
     @RequestMapping("/item/{postId}")
     public String getPostById(@PathVariable(value = "postId") int postId, Model model) {
-        model.addAttribute("post", postService.getPostById(postId));
+        model.addAttribute("post", postServiceImp.getPostById(postId));
         return "html/item";
     }
 
     @RequestMapping("/news")
     public String news(Model model, Principal principal) {
-        if (principal != null) {
-          principal.getName();
-        }
         return getAllPost(1, model, principal);
     }
 
     @RequestMapping("/newest")
     public String newest(Model model, Principal principal) {
-        if (principal != null) {
-             principal.getName();
-        }
         return getAllPost(1, model, principal);
     }
 

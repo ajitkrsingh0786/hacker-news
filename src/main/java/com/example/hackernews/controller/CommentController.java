@@ -3,8 +3,8 @@ package com.example.hackernews.controller;
 import com.example.hackernews.entity.Comment;
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.security.MyUserDetails;
-import com.example.hackernews.services.CommentService;
-import com.example.hackernews.services.PostService;
+import com.example.hackernews.services.service.CommentService;
+import com.example.hackernews.services.secviceImp.PostServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,24 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.security.Principal;
-
 @Controller
 public class CommentController {
 
-    PostService postService;
+    PostServiceImp postServiceImp;
     @Autowired
     CommentService commentService;
 
     @Autowired
-    public void setPostService(PostService postService) {
-        this.postService = postService;
+    public void setPostService(PostServiceImp postServiceImp) {
+        this.postServiceImp = postServiceImp;
     }
 
    @RequestMapping("/addCommentForm/{postId}")
     public String addCommentForm(@PathVariable(value = "postId") int postId, Model model) {
         Comment comment = new Comment();
-        Post post = postService.getPostById(postId);
+        Post post = postServiceImp.getPostById(postId);
         comment.setPost(post);
         model.addAttribute("comment", comment);
         return "html/commentForm";
@@ -45,7 +43,7 @@ public class CommentController {
 
     @RequestMapping("/viewComments/{postId}")
     public String viewComments(@PathVariable(value = "postId") int postId, Model model) {
-        Post post = postService.getPostById(postId);
+        Post post = postServiceImp.getPostById(postId);
 
         model.addAttribute("comments", commentService.getCommentsByPost(post));
         model.addAttribute("postId", postId);

@@ -1,4 +1,4 @@
-package com.example.hackernews.services;
+package com.example.hackernews.services.service;
 
 public interface LikeService {
     void upVotePost(String postId, String userId);
