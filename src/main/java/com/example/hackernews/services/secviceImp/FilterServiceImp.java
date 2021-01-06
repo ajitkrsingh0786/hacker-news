@@ -51,7 +51,7 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = ""+calendar.getTime();
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
         Date newDate= format.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);

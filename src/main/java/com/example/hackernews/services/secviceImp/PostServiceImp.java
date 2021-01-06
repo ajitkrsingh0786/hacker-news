@@ -56,7 +56,6 @@ public class PostServiceImp implements PostService {
             post.setUser(userRepository.findById(userDetails.getId()).get());
             post.setCreatedAt(new Date(new Date().getTime()));
         }
-
         if(post.getId() > 0){
             post.setCreatedAt(postRepository.findById(post.getId()).get().getCreatedAt());
         }
