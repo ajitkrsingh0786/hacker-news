@@ -21,9 +21,10 @@ public class LikeController {
 
     @GetMapping("/upVotePost")
     public String upVotePost(@RequestParam(name = "postId") String postId,
-                         @RequestParam(name = "userId") String userId,
-                             @RequestParam(name = "goTo") String goTo){
-        likeService.upVotePost(postId,userId);
+                         @RequestParam(name = "userId",required = false,defaultValue = "") String userId,
+                             @RequestParam(name = "goTo") String goTo,Principal principal){
+
+        likeService.upVotePost(postId,userId,principal);
         return "redirect:"+goTo;
     }
 

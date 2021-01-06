@@ -128,14 +128,17 @@ public class PostServiceImp implements PostService {
         Optional<Post> optional = postRepository.findById(postId);
         Post post = optional.get();
         List<Integer> likeCommentsId = new ArrayList<>();
+
+        model.addAttribute("postIsLike",false);
+
         if(principal != null){
             User user = userRepository.findByUsername(principal.getName()).get();
             likeCommentsId = commentLikeRepository.findAllByUserId(user);
+            if(likeRepository.findAllByPostIdAndUserId(postId,user.getId()) != null){
+                model.addAttribute("postIsLike",true);
+            }
         }
 
-        for (int i: likeCommentsId){
-            System.out.println(i);
-        }
         model.addAttribute("likeCommentsId",likeCommentsId);
         System.out.println(likeCommentsId.size()+"==>SIZE");
         return optional.orElse(null);

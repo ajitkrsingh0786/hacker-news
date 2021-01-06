@@ -39,12 +39,12 @@
                     <tr>
                         <td width="1px"></td>
                         <td valign="top" class="votelinks">
-                            <center th:if="${not #arrays.contains(likeCommentsId,comment.id)}">
-                                <a th:href="@{'/upVoteComment/?commentId='+${comment.id}+'&goTo='+${#httpServletRequest.requestURI}}">
+                            <center th:if="${postIsLike == false}">
+                                <a th:href="@{'/upVotePost?postId='+${comment.post.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                     <div class='votearrow' title='upvote'></div>
                                 </a>
                             </center>
-                            <center th:if="${#arrays.contains(likeCommentsId,comment.id)}">
+                            <center th:if="${postIsLike == true}">
                                 <a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 </a>
@@ -66,8 +66,10 @@
                             <a th:href="@{/userProfile/{userId}(userId=${comment.post.user.id})}" class="hnuser" th:utext="${comment.post.user.username}"></a>
                             <span class="age">
                                 <a href="" th:utext="${comment.post.createdAt}"></a>
+                            </span> |
+                            <span th:if="${postIsLike == true }">
+                                <a th:href="@{'/downVotePost?postId='+${comment.post.id}+'&userId='+${#authentication.getPrincipal().getId()}+'&goTo='+${#httpServletRequest.requestURI}}" >unvote</a> |
                             </span>
-                            <span id="unv_25576113"></span> |
                             <a href="">hide</a> |
                             <a href="">comments</a>
                         </td>
@@ -115,7 +117,7 @@
                                           <td class="default">
                                               <div style="margin-top:2px; margin-bottom:-10px;">
                                                   <span class="comhead">
-                                                   <a href="user?id=wsdrdsw" class="hnuser" th:utext="${comment1.user.username}"></a>
+                                                   <a th:href="@{/userProfile/{userId}(userId=${comment1.user.id})}" class="hnuser" th:utext="${comment1.user.username}"></a>
                                                       <span class="age">
                                                           <a href=" " th:utext="${comment1.createdAt}"></a>
                                                       </span>

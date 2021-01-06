@@ -51,7 +51,6 @@ public class CommentController {
         Comment comment = new Comment();
         Post post = postServiceImp.getPostById(postId,principal,model);
         comment.setPost(post);
-//        for()
         model.addAttribute("comment", comment);
         return "html/commentForm";
     }

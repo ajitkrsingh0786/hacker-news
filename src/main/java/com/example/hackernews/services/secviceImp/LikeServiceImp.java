@@ -43,8 +43,11 @@ public class LikeServiceImp implements LikeService {
     }
 
     @Override
-    public void upVotePost(String postId, String userId) {
+    public void upVotePost(String postId, String userId,Principal principal) {
         Like like = new Like();
+        if(userId.equals("")){
+            userId =""+userRepository.findByUsername(principal.getName()).get().getId();
+        }
         Post post = postRepository.findById(Integer.valueOf(postId)).get();
         post.setPoint(post.getPoint()+1);
         like.setPostId(Integer.parseInt(postId));
