@@ -32,7 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/submit","/addComment",
                         "/upVotePost","/downVotePost",
                         "/hidePost", "/unHidePost","/hidden",
-                        "/upVotedSubmissions").
+                        "/upVotedSubmissions",
+                        "/replyComment/**",
+                        "/addReply/**","/addComment").
                 hasAnyRole("ADMIN", "USER").
                 antMatchers("/").permitAll().and().
                 formLogin().loginPage("/login").permitAll().
