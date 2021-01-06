@@ -48,12 +48,12 @@ public class FilterServiceImp implements FilterService {
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.clear(Calendar.ZONE_OFFSET);
-        if (date == null) {
-            date = ""+calendar.getTime();
-        }
-        SimpleDateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
-        Date newDate= format.parse(date);
-        calendar.setTime(newDate);
+//        if (date == null) {
+//            date = ""+calendar.getTime();
+//        }
+//        SimpleDateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
+//        Date newDate= format.parse(date);
+//        calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
         List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
