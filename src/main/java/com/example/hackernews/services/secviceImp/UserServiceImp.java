@@ -2,7 +2,7 @@ package com.example.hackernews.services.secviceImp;
 
 import com.example.hackernews.entity.User;
 import com.example.hackernews.repository.UserRepository;
-import com.example.hackernews.services.UserService;
+import com.example.hackernews.services.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
