@@ -55,6 +55,8 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
+        System.out.println("AAA");
+        System.out.println(date);
         ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
         newDate = newDate.minusDays(1);
         setDateRang(newDate,model,principal);
@@ -66,6 +68,8 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
+        System.out.println("AAA");
+        System.out.println(date);
         ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
         newDate = newDate.minusMonths(1);
         setDateRang(newDate,model,principal);
@@ -78,6 +82,8 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
+        System.out.println("AAA");
+        System.out.println(date);
         ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
         newDate = newDate.minusYears(1);
         setDateRang(newDate,model,principal);
@@ -89,17 +95,20 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
+        System.out.println("AAA");
+        System.out.println(date);
         ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
         newDate = newDate.plusDays(1);
         setDateRang(newDate,model,principal);
     }
 
     private void setDateRang(ZonedDateTime newDate,Model model, Principal principal ){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
         Instant instant = newDate.toInstant();
         String s = "" + newDate.toLocalDate();
         List<Post> posts = postRepository.findAllWithPublishedAtBefore(Date.from(instant));
         model.addAttribute("posts", posts);
-        model.addAttribute("date", Date.from(instant));
+        model.addAttribute("date", newDate.format(formatter));
         model.addAttribute("s", s);
         model.addAttribute("hidePosts", new ArrayList<Integer>());
 
