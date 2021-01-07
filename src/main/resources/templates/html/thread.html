@@ -2,6 +2,19 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <style>
+            .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+
     body  { font-family:Verdana, Geneva, sans-serif; font-size:10pt; color:#828282; }
     .yclinks { font-family:Verdana, Geneva, sans-serif; font-size:  9pt; color:#828282; }
     </style>
@@ -17,10 +30,10 @@
                 <div th:replace="html/header :: header"></div>
             </td>
         </tr>
-        <tr id="pagespace" title="vinayak2110&#x27;s comments" style="height:10px"></tr>
-        <tr >
+        <tr id="pagespace" title="threads" style="height:10px"></tr>
+        <tr>
             <td>
-        <tr  th:each="comment : ${userComment}" class='athing comtr ' id='25602878'>
+        <tr  th:each="comment : ${userComments}" class='athing comtr '>
             <td>
                 <table border='0'>
                     <tr>
@@ -29,7 +42,7 @@
                         </td>
                         <td valign="top" class="votelinks">
                             <center>
-                                <font color="#ff6600">*</font>
+                                <font color="#ff6600"></font>
                                 <br>
                                 <img src="s.gif" height="1" width="14">
                             </center>
@@ -38,18 +51,16 @@
                             <div style="margin-top:2px; margin-bottom:-10px;">
                                 <span class="comhead">
                                     <span class="score" id="score_25602878">1 point</span> by
-                                    <a href="#" class="hnuser">
-                                        <font color="#3c963c" th:utext="comment.user.username">vinayak2110</font>
+                                    <a th:href="@{/userProfile/{userId}(userId=${comment.user.id})}" class="hnuser">
+                                        <font color="#3c963c" th:utext="${comment.user.username}">vinayak2110</font>
                                     </a>
                                     <span class="age">
-                                        <a href="#" th:utext="comment.createdAt">0 minutes ago</a>
+                                        <a href="#" th:utext="${comment.createdAt}">0 minutes ago</a>
                                     </span>
                                     <span id="unv_25602878"></span>
-                                    <span class="par"> |
-                                        <a href="#">parent</a>
-                                    </span> |
-                                    <a href="#">edit</a> |
-                                    <a href="#">delete</a>
+<!--                                    <span class="par"> |-->
+<!--                                        <a href="#">parent</a>-->
+<!--                                    </span> -->
                                     <span class='storyon'> | on:
                                         <a href="#" th:utext="${comment.post.title}">Fired App Reviewer Sues Apple</a>
                                     </span>
