@@ -54,15 +54,12 @@
                                     <a th:href="@{/userProfile/{userId}(userId=${comment.user.id})}" class="hnuser">
                                         <font color="#3c963c" th:utext="${comment.user.username}">vinayak2110</font>
                                     </a>
-                                    <span class="age">
-                                        <a href="#" th:utext="${comment.createdAt}">0 minutes ago</a>
+                                    <span >
+                                        <a th:utext="${timeAgo.get(userComments.indexOf(comment))}">0 minutes ago</a>
                                     </span>
                                     <span id="unv_25602878"></span>
-<!--                                    <span class="par"> |-->
-<!--                                        <a href="#">parent</a>-->
-<!--                                    </span> -->
                                     <span class='storyon'> | on:
-                                        <a href="#" th:utext="${comment.post.title}">Fired App Reviewer Sues Apple</a>
+                                        <a th:href="@{/addCommentForm/{postId}(postId=${comment.post.id})}" th:utext="${comment.post.title}">Fired App Reviewer Sues Apple</a>
                                     </span>
 
                                 </span>

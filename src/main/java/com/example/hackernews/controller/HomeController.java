@@ -37,11 +37,6 @@ public class HomeController {
         if(principal != null){
             homeService.findAllCommentByUsername(principal,model,pageNo);
         }
-//        else{
-//            model.addAttribute("user",new User());
-//
-//            model.addAttribute("userLikedComment",new ArrayList<Integer>());
-//        }
         return "html/thread";
     }
 

@@ -6,6 +6,7 @@ import com.example.hackernews.repository.CommentLikeRepository;
 import com.example.hackernews.repository.CommentRepository;
 import com.example.hackernews.repository.UserRepository;
 import com.example.hackernews.services.service.HomeService;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class HomeServiceImp implements HomeService {
@@ -59,6 +57,13 @@ public class HomeServiceImp implements HomeService {
         userCommentsPage.setPageSize(10);
         userCommentsPage.setPage(pageNo-1);
 
+        List<String> timeAgo = new ArrayList<>();
+        for(Comment comment : userCommentsPage.getPageList()){
+            PrettyTime prettyTime = new PrettyTime();
+            timeAgo.add(prettyTime.format(comment.getCreatedAt()));
+        }
+
+        model.addAttribute("timeAgo",timeAgo);
         model.addAttribute("isLast",userCommentsPage.isLastPage());
         model.addAttribute("currentPage",userCommentsPage.getPage()+1);
         model.addAttribute("userComments", userCommentsPage.getPageList());
