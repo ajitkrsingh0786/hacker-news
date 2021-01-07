@@ -48,12 +48,12 @@ public class FilterServiceImp implements FilterService {
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.clear(Calendar.ZONE_OFFSET);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy",Locale.ROOT);
         if (date == null) {
             date = dateFormat.format(calendar.getTime());
         }
 
-        Date newDate= (Date)dateFormat.parse(date);
+        Date newDate= dateFormat.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
@@ -86,7 +86,7 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = ""+calendar.getTime();
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy");
+        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy",Locale.ROOT);
         Date newDate= format.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.MONTH, -1);
@@ -122,7 +122,7 @@ public class FilterServiceImp implements FilterService {
         if (date == null) {
             date = ""+calendar.getTime();
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy");
+        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy",Locale.ROOT);
         Date newDate= format.parse(date);
         calendar.setTime(newDate);
         calendar.add(Calendar.YEAR, -1);
