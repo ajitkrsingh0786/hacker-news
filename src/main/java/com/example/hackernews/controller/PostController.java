@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 public class PostController {
@@ -31,6 +33,11 @@ public class PostController {
 
     @RequestMapping("/")
     public String showHomePage(Model model, Principal principal) {
+        Date d = new Date(new Date().getTime());
+        System.out.println(d);
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear(Calendar.ZONE_OFFSET);
+        System.out.println(""+calendar.getTime());
         return getAllPost(1, model, principal);
     }
 

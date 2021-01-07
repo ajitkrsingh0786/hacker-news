@@ -54,7 +54,13 @@
                                 <a th:href="@{'/pastYearPosts?date='+${date}}">year</a>
                             </span>. Go forward a
                             <span class="hnmore">
-                                <a href="   ">day</a>
+                                 <a th:href="@{'/forwardPosts?date='+${date}}">day</a>
+                            </span>.
+                        </td>
+                        <td th:if="${#lists.isEmpty(posts)}">
+                              Go forward a
+                            <span class="hnmore">
+                                 <a th:href="@{'/forwardPosts?date='+${date}}">day</a>
                             </span>.
                         </td>
                     </tr>

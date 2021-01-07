@@ -34,4 +34,9 @@ public class FilterController {
         return "html/past";
     }
 
+    @RequestMapping("/forwardPosts")
+    public String forwardDayPosts(@Param("date") String date , Model model, Principal principal) throws ParseException {
+        filterService.getAllForwardDay(date, model,principal);
+        return "html/past";
+    }
 }

@@ -14,4 +14,5 @@ public interface FilterService {
     void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException;
     void getAllBeforeMonth(String date, Model model, Principal principal) throws ParseException;
     void getAllBeforeYear(String date, Model model, Principal principal) throws ParseException;
+    void getAllForwardDay(String date, Model model, Principal principal) throws ParseException;
 }

@@ -14,6 +14,11 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.text.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -46,106 +51,81 @@ public class FilterServiceImp implements FilterService {
 
     @Override
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.ZONE_OFFSET);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
-            date = ""+calendar.getTime();
+            date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
-        Date newDate= format.parse(date);
-        calendar.setTime(newDate);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-        String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
-        List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
-        model.addAttribute("posts", posts);
-        model.addAttribute("date",calendar.getTime());
-        model.addAttribute("s", s);
-        model.addAttribute("hidePosts",new ArrayList<Integer>());
-
-        List<String> timeAgo = new ArrayList<>();
-        for(Post post : posts){
-            PrettyTime prettyTime = new PrettyTime();
-            timeAgo.add(prettyTime.format(post.getCreatedAt()));
-        }
-        model.addAttribute("timeAgo",timeAgo);
-
-        if(principal!= null){
-            String username = principal.getName();
-            User user = userRepository.findByUsername(username).get();
-            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
-            model.addAttribute("userLikes",userLikes);
-        }
+        System.out.println("AAA");
+        System.out.println(date);
+        ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
+        newDate = newDate.minusDays(1);
+        setDateRang(newDate,model,principal);
     }
 
     @Override
     public void getAllBeforeMonth(String date, Model model, Principal principal) throws ParseException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.ZONE_OFFSET);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
-            date = ""+calendar.getTime();
+            date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy");
-        Date newDate= format.parse(date);
-        calendar.setTime(newDate);
-        calendar.add(Calendar.MONTH, -1);
-        String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
-        List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
-        model.addAttribute("posts", posts);
-        model.addAttribute("date",calendar.getTime());
-        model.addAttribute("s", s);
-
-        model.addAttribute("hidePosts",new ArrayList<Integer>());
-
-        List<String> timeAgo = new ArrayList<>();
-        for(Post post : posts){
-            PrettyTime prettyTime = new PrettyTime();
-            timeAgo.add(prettyTime.format(post.getCreatedAt()));
-        }
-        model.addAttribute("timeAgo",timeAgo);
-
-        if(principal!= null){
-            String username = principal.getName();
-            User user = userRepository.findByUsername(username).get();
-            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
-            model.addAttribute("userLikes",userLikes);
-        }
+        System.out.println("AAA");
+        System.out.println(date);
+        ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
+        newDate = newDate.minusMonths(1);
+        setDateRang(newDate,model,principal);
     }
 
     @Override
     public void getAllBeforeYear(String date, Model model, Principal principal) throws ParseException {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.ZONE_OFFSET);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
-            date = ""+calendar.getTime();
+            date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy");
-        Date newDate= format.parse(date);
-        calendar.setTime(newDate);
-        calendar.add(Calendar.YEAR, -1);
-        String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
-        List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
-        model.addAttribute("posts",posts);
-        model.addAttribute("date",calendar.getTime());
-        model.addAttribute("s", s);
+        System.out.println("AAA");
+        System.out.println(date);
+        ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
+        newDate = newDate.minusYears(1);
+        setDateRang(newDate,model,principal);
+    }
 
-        model.addAttribute("hidePosts",new ArrayList<Integer>());
+    @Override
+    public void getAllForwardDay(String date, Model model, Principal principal) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
+        if (date == null) {
+            date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
+        }
+        System.out.println("AAA");
+        System.out.println(date);
+        ZonedDateTime newDate = ZonedDateTime.parse(date, formatter);
+        newDate = newDate.plusDays(1);
+        setDateRang(newDate,model,principal);
+    }
+
+    private void setDateRang(ZonedDateTime newDate,Model model, Principal principal ){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
+        Instant instant = newDate.toInstant();
+        String s = "" + newDate.toLocalDate();
+        List<Post> posts = postRepository.findAllWithPublishedAtBefore(Date.from(instant));
+        model.addAttribute("posts", posts);
+        model.addAttribute("date", newDate.format(formatter));
+        model.addAttribute("s", s);
+        model.addAttribute("hidePosts", new ArrayList<Integer>());
 
         List<String> timeAgo = new ArrayList<>();
-        for(Post post : posts){
+        for (Post post : posts) {
             PrettyTime prettyTime = new PrettyTime();
             timeAgo.add(prettyTime.format(post.getCreatedAt()));
         }
-        model.addAttribute("timeAgo",timeAgo);
+        model.addAttribute("timeAgo", timeAgo);
 
-        if(principal!= null){
+        if (principal != null) {
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
-            model.addAttribute("userLikes",userLikes);
+            model.addAttribute("hidePosts", hideRepository.findAllByUserId(user.getId()));
+            model.addAttribute("userLikes", userLikes);
         }
+
     }
 }
