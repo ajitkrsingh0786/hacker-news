@@ -14,6 +14,11 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.text.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -46,21 +51,27 @@ public class FilterServiceImp implements FilterService {
 
     @Override
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.ZONE_OFFSET);
-        Locale.setDefault(Locale.ROOT);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
+       Calendar calendar = Calendar.getInstance();
+      calendar.clear(Calendar.ZONE_OFFSET);
+//        Locale.setDefault(Locale.ROOT);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
-            date = dateFormat.format(calendar.getTime());
+            date = ""+calendar.getTime();
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
+        ZonedDateTime newDate = ZonedDateTime.parse(date,formatter);
+          newDate = newDate.minusDays(1);
+        Instant instant = newDate.toInstant();
 
-        Date newDate= dateFormat.parse(date);
-        calendar.setTime(newDate);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-        String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
-        List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
+        // Create Date instance out of Instant
+       // Date date = Date.from(instant);
+//        Date newDate= dateFormat.parse(date);
+//        calendar.setTime(newDate);
+//        calendar.add(Calendar.DAY_OF_YEAR, -1);
+        String s = ""+Date.from(instant) ;//+ DateFormat.getDateInstance().format(calendar.getTime());
+        List<Post> posts = postRepository.findAllWithPublishedAtBefore(Date.from(instant));
         model.addAttribute("posts", posts);
-        model.addAttribute("date",calendar.getTime());
+        model.addAttribute("date",Date.from(instant));
         model.addAttribute("s", s);
         model.addAttribute("hidePosts",new ArrayList<Integer>());
 
@@ -84,12 +95,14 @@ public class FilterServiceImp implements FilterService {
     public void getAllBeforeMonth(String date, Model model, Principal principal) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.clear(Calendar.ZONE_OFFSET);
-        if (date == null) {
-            date = ""+calendar.getTime();
-        }
-        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy",Locale.ROOT);
-        Date newDate= format.parse(date);
-        calendar.setTime(newDate);
+//        if (date == null) {
+//            date = ""+calendar.getTime();
+//        }
+//        DateFormat format = new SimpleDateFormat("EEE LLL dd HH:mm:ss Z yyyy",Locale.ROOT);
+//        Date newDate= format.parse(date);
+
+        ZonedDateTime newDate = ZonedDateTime.parse(date);
+       // calendar.setTime(newDate);
         calendar.add(Calendar.MONTH, -1);
         String s = "" + DateFormat.getDateInstance().format(calendar.getTime());
         List<Post> posts = postRepository.findAllWithPublishedAtBefore(calendar.getTime());
