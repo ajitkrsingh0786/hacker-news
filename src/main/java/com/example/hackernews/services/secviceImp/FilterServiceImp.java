@@ -48,7 +48,8 @@ public class FilterServiceImp implements FilterService {
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         calendar.clear(Calendar.ZONE_OFFSET);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy",Locale.ROOT);
+        Locale.setDefault(Locale.ROOT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
             date = dateFormat.format(calendar.getTime());
         }
