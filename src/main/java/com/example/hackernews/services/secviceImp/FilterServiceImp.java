@@ -53,12 +53,13 @@ public class FilterServiceImp implements FilterService {
     public void getAllBeforeDay(String date, Model model, Principal principal) throws ParseException {
        Calendar calendar = Calendar.getInstance();
       calendar.clear(Calendar.ZONE_OFFSET);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
 //        Locale.setDefault(Locale.ROOT);
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE LLL dd HH:mm:ss zzz yyyy");
         if (date == null) {
-            date = ""+calendar.getTime();
+            date = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(formatter);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE LLL dd HH:mm:ss zzz yyyy");
+
         ZonedDateTime newDate = ZonedDateTime.parse(date,formatter);
           newDate = newDate.minusDays(1);
         Instant instant = newDate.toInstant();
