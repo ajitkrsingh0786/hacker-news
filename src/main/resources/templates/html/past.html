@@ -42,9 +42,8 @@
                         <td>Stories from <span th:utext="${s}"></span></td>
                     </tr>
                     <tr>
-<!--                        <td colspan="2"></td>-->
-                       <td>
-                        Go back a
+                        <td colspan="2"></td>
+                        <td th:if="${not #lists.isEmpty(posts)}">Go back a
                             <span class="hnmore">
                                 <a th:href="@{'/pastPosts?date='+${date}}">day</a>
                             </span>,
@@ -55,7 +54,13 @@
                                 <a th:href="@{'/pastYearPosts?date='+${date}}">year</a>
                             </span>. Go forward a
                             <span class="hnmore">
-                                <a href="   ">day</a>
+                                 <a th:href="@{'/forwardPosts?date='+${date}}">day</a>
+                            </span>.
+                        </td>
+                        <td th:if="${#lists.isEmpty(posts)}">
+                              Go forward a
+                            <span class="hnmore">
+                                 <a th:href="@{'/forwardPosts?date='+${date}}">day</a>
                             </span>.
                         </td>
                     </tr>
