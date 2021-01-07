@@ -30,9 +30,16 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:2px">
                     <tbody>
                     <tr>
-                        <td style="width:18px;padding-right:4px"><a href="https://news.ycombinator.com"><img
-                                src="y18.gif" width="18" height="18" style="border:1px white solid;"></a></td>
-                        <td style="line-height:12pt; height:10px;"><span class="pagetop"><b>Add Comment</b></span></td>
+                        <td style="width:18px;padding-right:4px">
+                            <a th:href="@{/news}">
+                                <img src="y18.gif" width="18" height="18" style="border:1px white solid;">
+                            </a>
+                        </td>
+                        <td style="line-height:12pt; height:10px;">
+                            <span class="pagetop">
+                                <b>Add Comment</b>
+                            </span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -46,27 +53,34 @@
                     <tr class="athing">
                         <td class="ind"></td>
                         <td class="votelinks">
-                            <center>
-                                <a href="">
+                            <center th:if="${not #arrays.contains(likeCommentsId,parentComment.id)}" >
+                                <a th:href="@{'/upVoteComment/?commentId='+${parentComment.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                     <div class="votearrow" title="upvote"></div>
+                                </a>
+                            </center>
+                            <center th:if="${#arrays.contains(likeCommentsId,parentComment.id)}">
+                                <a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
                                 </a>
                             </center>
                         </td>
                         <td class="default">
                             <div style="margin-top:2px; margin-bottom:-10px;">
                                 <span class="comhead">
-                           <a href="" class="hnuser" th:utext="${parentComment.user.username}"></a>
-                                    <span class="age">
-                                        <a href="">18 hours ago</a>
+                                    <a th:href="@{/userProfile/{userId}(userId=${parentComment.user.id})}" class="hnuser" th:utext="${parentComment.user.username}"></a>
+                                        <span class="age">
+                                            <a href="" th:utext="${parentComment.createdAt}">18 hours ago</a>
+                                        </span>
+                                    <span th:if="${#arrays.contains(likeCommentsId,parentComment.id)}"> |
+                                        <span th:if="${#arrays.contains(likeCommentsId,parentComment.id)}"> |
+                                            <a th:href="@{'/downVoteComment/?commentId='+${parentComment.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>
+                                        </span>
                                     </span>
-                                    <span id="unv_25626134"></span>
-                                    <span class="par"> |
-                                        <a href="item?id=25623305">parent</a></span>
-                                        <a class="togg" href=" "></a>
-                                    <span class="storyon"> | on:
-                                        <a href="item?id=25623305" th:utext="${parentComment.post.title}"></a>
+                                        <span class="storyon"> | on:
+                                            <a href="#" th:utext="${parentComment.post.title}"></a>
+                                        </span>
                                     </span>
-                     </span>
+                                </span>
                             </div>
                             <br>
                             <div class="comment">
@@ -82,14 +96,11 @@
                         <td>
                             <form action="#" th:action="@{/addReply/{parentCommentId}(parentCommentId=${parentComment.id})}" th:object="${comment}" method="POST">
                                 <textarea name="text" th:field="*{message}" rows="6" cols="60"></textarea>
-                                <br><br>
-                                <span class="subtext">
-                                    If you haven't already, would you mind reading about HN's
-                                    <a href="newswelcome.html"><u>approach to comments</u></a>
-                                    and <
-                                    a href="newsguidelines.html"><u>site guidelines</u></a>?
-                                 </span>
-                                <br><br><input type="submit" value="reply"></form>
+                                <br>
+                                <br>
+                                <br>
+                                <input type="submit" value="reply">
+                            </form>
                         </td>
                     </tr>
                     </tbody>

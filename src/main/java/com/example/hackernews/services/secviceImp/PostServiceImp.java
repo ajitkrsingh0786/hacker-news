@@ -1,11 +1,9 @@
 package com.example.hackernews.services.secviceImp;
 
+import com.example.hackernews.entity.Comment;
 import com.example.hackernews.entity.Post;
 import com.example.hackernews.entity.User;
-import com.example.hackernews.repository.HideRepository;
-import com.example.hackernews.repository.LikeRepository;
-import com.example.hackernews.repository.PostRepository;
-import com.example.hackernews.repository.UserRepository;
+import com.example.hackernews.repository.*;
 import com.example.hackernews.security.MyUserDetails;
 import com.example.hackernews.services.service.PostService;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -30,6 +28,12 @@ public class PostServiceImp implements PostService {
     PostRepository postRepository;
     LikeRepository likeRepository;
     HideRepository hideRepository;
+    CommentLikeRepository commentLikeRepository;
+
+    @Autowired
+    public void setCommentLikeRepository(CommentLikeRepository commentLikeRepository) {
+        this.commentLikeRepository = commentLikeRepository;
+    }
 
     @Autowired
     public void setHideRepository(HideRepository hideRepository) {
@@ -113,6 +117,29 @@ public class PostServiceImp implements PostService {
     @Override
     public Post getPostById(int postId) {
         Optional<Post> optional = postRepository.findById(postId);
+        Post post = optional.get();
+
+        return optional.orElse(null);
+    }
+
+    @Override
+    public Post getPostById(int postId, Principal principal,Model model) {
+        Optional<Post> optional = postRepository.findById(postId);
+        Post post = optional.get();
+        List<Integer> likeCommentsId = new ArrayList<>();
+
+        model.addAttribute("postIsLike",false);
+
+        if(principal != null){
+            User user = userRepository.findByUsername(principal.getName()).get();
+            likeCommentsId = commentLikeRepository.findAllByUserId(user);
+            if(likeRepository.findAllByPostIdAndUserId(postId,user.getId()) != null){
+                model.addAttribute("postIsLike",true);
+            }
+        }
+
+        model.addAttribute("likeCommentsId",likeCommentsId);
+        System.out.println(likeCommentsId.size()+"==>SIZE");
         return optional.orElse(null);
     }
 }

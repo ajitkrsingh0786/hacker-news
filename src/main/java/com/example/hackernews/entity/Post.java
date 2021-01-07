@@ -43,13 +43,12 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Comment> comments = new ArrayList<>();
 
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
 
     public int getPoint() {
         return point;
-    }
-
-    public void setPoint(int point) {
-        this.point = point;
     }
 
     public User getUser() {

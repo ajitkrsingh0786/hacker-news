@@ -29,6 +29,10 @@ public class User {
     String role;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "userId")
+    List<CommentLike> commentLikes = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Post> posts = new ArrayList<>();
 
@@ -36,6 +40,14 @@ public class User {
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     List<Comment> userComments= new ArrayList<>();
 
+
+    public List<CommentLike> getCommentLikes() {
+        return commentLikes;
+    }
+
+    public void setCommentLikes(List<CommentLike> commentLikes) {
+        this.commentLikes = commentLikes;
+    }
 
     public List<Post> getPosts() {
         return posts;

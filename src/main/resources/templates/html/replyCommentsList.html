@@ -38,27 +38,34 @@
 
               <span th:with="someVariable=${someVariable+40}">
         <span th:each="comment2:${comment1.childComments}">
-            <tr class="athing comtr " id="25639803">
+            <tr class="athing comtr ">
                                 <td>
                                   <table border="0">
                                       <tbody>
                                       <tr>
                                           <td class="ind"><img src="s.gif" height="1" th:width="${someVariable}"></td>
                                           <td valign="top" class="votelinks">
-                                           <center>
-                                            <a href="">
+                                           <center th:if="${not #arrays.contains(likeCommentsId,comment2.id)}">
+                                            <a th:href="@{'/upVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                                 <div class="votearrow" title="upvote">*</div>
                                             </a>
                                            </center>
+                                              <center th:if="${#arrays.contains(likeCommentsId,comment2.id)}">
+                                                  <a>
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  </a>
+                                              </center>
                                           </td>
                                           <td class="default">
                                               <div style="margin-top:2px; margin-bottom:-10px;">
                                                   <span class="comhead">
-                                                   <a href="user?id=wsdrdsw" class="hnuser" th:utext="${comment2.user.username}"></a>
+                                                   <a th:href="@{/userProfile/{userId}(userId=${comment2.user.id})}" class="hnuser" th:utext="${comment2.user.username}"></a>
                                                       <span class="age">
                                                            <a href=" " th:utext="${comment2.createdAt}"></a>
                                                       </span>
-                                                      <span id="unv_25639803"></span>
+                                                      <span th:if="${#arrays.contains(likeCommentsId,comment2.id)}"> |
+                                                          <a th:href="@{'/downVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>
+                                                      </span>
                                                       <span class="par"></span>
                                                       <span class="storyon"></span>
                                                    </span>
@@ -80,23 +87,12 @@
                                   </table>
                                 </td>
                             </tr>
-            <!--           <tr>-->
-            <!--               <td colspan="2">^.</td>-->
-            <!--               <td th:utext="${comment2.message}">-->
-            <!--           </tr>-->
-            <!--            <tr>-->
-            <!--                <td colspan="2"></td>-->
-            <!--                <td><a th:href="@{/replyComment/{commentId}(commentId=${comment2.id})}"-->
-            <!--                       style="height:5px">reply</a></td>-->
-            <!--            </tr>-->
-            <!--            <tr class="spacer" style="height:5px"></tr>-->
-
-        <span th:with="comment1 = ${comment2}"
-              th:include="html/replyCommentsList.html :: replyComments" th:remove="tag"></span>
-             </span>
+            <span th:with="comment1 = ${comment2}"
+                  th:include="html/replyCommentsList.html :: replyComments" th:remove="tag">
+            </span>
+        </span>
               </span>
         </span>
-
             </span>
         </span>
         </span>
