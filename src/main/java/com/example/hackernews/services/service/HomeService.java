@@ -9,5 +9,5 @@ import java.util.List;
 public interface HomeService {
     List<Comment> findAllComment(String username);
 
-    void findAllCommentByUsername(Principal principal, Model model);
+    void findAllCommentByUsername(Principal principal, Model model,int pageNo);
 }

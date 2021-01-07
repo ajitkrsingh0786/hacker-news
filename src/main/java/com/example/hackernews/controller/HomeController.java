@@ -31,17 +31,17 @@ public class HomeController {
 
     @GetMapping("/thread")
     public String thread(Principal principal,
-                         Model model){
+                         Model model,
+                         @RequestParam(name = "pageNo") int pageNo){
 
         if(principal != null){
-            homeService.findAllCommentByUsername(principal,model);
-        }else{
-            model.addAttribute("user",new User());
-
-            model.addAttribute("userLikedComment",new ArrayList<Integer>());
+            homeService.findAllCommentByUsername(principal,model,pageNo);
         }
-
-//        model.addAttribute("userComment", new ArrayList<Comment>());
+//        else{
+//            model.addAttribute("user",new User());
+//
+//            model.addAttribute("userLikedComment",new ArrayList<Integer>());
+//        }
         return "html/thread";
     }
 

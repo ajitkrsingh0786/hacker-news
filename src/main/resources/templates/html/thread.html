@@ -42,7 +42,7 @@
                         </td>
                         <td valign="top" class="votelinks">
                             <center>
-                                <font color="#ff6600"></font>
+                                <font color="#ff6600">*</font>
                                 <br>
                                 <img src="s.gif" height="1" width="14">
                             </center>
@@ -79,6 +79,12 @@
                     </tr>
                 </table>
             </td>
+        <tr style="float:left;" th:if="${not isLast}">
+            <td colspan="2"></td>
+            <td class="title">
+                <a  th:href="@{'/thread?pageNo='+${currentPage+1}}" class="morelink" rel="next">More</a>
+            </td>
+        </tr>
         </tr>
         <tr>
             <td>
