@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/upVotedSubmissions",
                         "/replyComment/**",
                         "/addReply/**","/addComment",
-                        "/upVoteComment/**","/downVoteComment/**").
+                        "/upVoteComment/**","/downVoteComment/**",
+                        "/thread").
                 hasAnyRole("ADMIN", "USER").
                 antMatchers("/").permitAll().and().
                 formLogin().loginPage("/login").permitAll().
