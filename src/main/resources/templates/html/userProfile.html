@@ -125,7 +125,7 @@
                         <tr>
                             <td></td>
                             <td>
-                                <a href="threads?id=vinayak2110">
+                                <a th:href="@{'/thread?pageNo=1'}">
                                     <u>comments</u>
                                 </a>
                             </td>
@@ -144,24 +144,12 @@
                                 <a th:href="@{'/upVotedSubmissions?userId='+${user.id}}">
                                     <u>upvoted submissions</u>
                                 </a> /
-                                <a href="upvoted?id=vinayak2110&amp;comments=t">
+<!--                                TODO ->BY AJIT-->
+                                <a href="#">
                                     <u>comments</u>
                                 </a>
                                 &nbsp;
                                 <span style='font-style:italic'>(private)</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <a href="favorites?id=vinayak2110">
-                                    <u>favorite submissions</u>
-                                </a> /
-                                <a href="favorites?id=vinayak2110&amp;comments=t">
-                                    <u>comments</u>
-                                </a>
-                                &nbsp;
-                                <span style='font-style:italic'>(shared)</span>
                             </td>
                         </tr>
                         </span>
@@ -183,14 +171,6 @@
                                 <td>
                                     <a href="">
                                         <u>comments</u>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <a href="favorites?id=apsec112">
-                                        <u>favorites</u>
                                     </a>
                                 </td>
                             </tr>
