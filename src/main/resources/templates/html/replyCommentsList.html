@@ -45,6 +45,7 @@
                                       <tr>
                                           <td class="ind"><img src="s.gif" height="1" th:width="${someVariable}"></td>
                                           <td valign="top" class="votelinks">
+                                               <span th:if="${likeCommentsId}">
                                            <center th:if="${not #arrays.contains(likeCommentsId,comment2.id)}">
                                             <a th:href="@{'/upVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}">
                                                 <div class="votearrow" title="upvote">*</div>
@@ -55,6 +56,7 @@
                                                       &nbsp;&nbsp;&nbsp;&nbsp;
                                                   </a>
                                               </center>
+                                               </span>
                                           </td>
                                           <td class="default">
                                               <div style="margin-top:2px; margin-bottom:-10px;">
@@ -63,9 +65,11 @@
                                                       <span class="age">
                                                            <a href=" " th:utext="${comment2.createdAt}"></a>
                                                       </span>
+                                                       <span th:if="${likeCommentsId}">
                                                       <span th:if="${#arrays.contains(likeCommentsId,comment2.id)}"> |
                                                           <a th:href="@{'/downVoteComment/?commentId='+${comment2.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>
                                                       </span>
+                                                       </span>
                                                       <span class="par"></span>
                                                       <span class="storyon"></span>
                                                    </span>

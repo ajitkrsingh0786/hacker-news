@@ -11,6 +11,7 @@ public interface CommentService {
     void saveComment(Comment comment, MyUserDetails userDetails);
 
     List<Comment> getCommentsByPost(Post post);
+    List<Comment> getAllComments();
 
     void deleteCommentById(int id);
 
