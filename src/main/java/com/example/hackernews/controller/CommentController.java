@@ -49,14 +49,15 @@ public class CommentController {
     @RequestMapping("/addCommentForm/{postId}")
     public String addCommentForm(@PathVariable(value = "postId") int postId, Model model, Principal principal) {
         Comment comment = new Comment();
-        Post post = postServiceImp.getPostById(postId,principal,model);
+        Post post = postServiceImp.getPostById(postId, principal, model);
         comment.setPost(post);
         model.addAttribute("comment", comment);
         return "html/commentForm";
     }
 
     @PostMapping("/addComment")
-    public String addComment(@ModelAttribute("comment") Comment comment, @AuthenticationPrincipal MyUserDetails userDetails) {
+    public String addComment(@ModelAttribute("comment") Comment comment,
+                             @AuthenticationPrincipal MyUserDetails userDetails) {
         commentService.saveComment(comment, userDetails);
         return "redirect:/addCommentForm/" + comment.getPost().getId();
     }
@@ -85,21 +86,50 @@ public class CommentController {
     }
 
     @RequestMapping("/replyComment/{commentId}")
-    public String replyComment(@PathVariable(value = "commentId") int commentId, Model model,Principal principal){
+    public String replyComment(@PathVariable(value = "commentId") int commentId, Model model, Principal principal) {
         Comment comment = new Comment();
         model.addAttribute("comment", comment);
-        if(principal != null){
-            model.addAttribute("likeCommentsId",commentLikeRepository.findAllByUserId(userRepository.findByUsername(principal.getName()).get()));
+        if (principal != null) {
+            model.addAttribute("likeCommentsId",
+                    commentLikeRepository.findAllByUserId(userRepository.findByUsername(principal.getName()).get()));
         }
         model.addAttribute("parentComment", commentService.getCommentById(commentId));
         return "html/replyComment";
     }
 
     @PostMapping("/addReply/{parentCommentId}")
-    public String addReply(@PathVariable(value = "parentCommentId") int parentCommentId, @ModelAttribute Comment comment,@AuthenticationPrincipal MyUserDetails userDetails){
-        commentService.saveReplyComment(comment,userDetails,parentCommentId);
+    public String addReply(@PathVariable(value = "parentCommentId") int parentCommentId,
+                           @ModelAttribute Comment comment, @AuthenticationPrincipal MyUserDetails userDetails) {
+        commentService.saveReplyComment(comment, userDetails, parentCommentId);
         Comment comment1 = commentService.getCommentById(parentCommentId);
-        return "redirect:/addCommentForm/"+comment1.getPost().getId();
+        return "redirect:/addCommentForm/" + comment1.getPost().getId();
+    }
+
+
+    @RequestMapping("/comments")
+    public String comments(Model model) {
+        model.addAttribute("comments", commentService.getAllComments());
+        return "html/comments";
+    }
+
+    @RequestMapping("/comment/{commentId}")
+    public String getCommentById(@PathVariable(value = "commentId") int commentId, Model model, Principal principal) {
+        Comment comment = new Comment();
+        if (principal != null) {
+            model.addAttribute("likeCommentsId",
+                    commentLikeRepository.findAllByUserId(userRepository.findByUsername(principal.getName()).get()));
+        }
+        model.addAttribute("comment", comment);
+        model.addAttribute("parentComment", commentService.getCommentById(commentId));
+        return "html/parentComment";
+    }
+
+    @PostMapping("/reply/{parentCommentId}")
+    public String reply(@PathVariable(value = "parentCommentId") int parentCommentId,
+                           @ModelAttribute Comment comment, @AuthenticationPrincipal MyUserDetails userDetails) {
+        commentService.saveReplyComment(comment, userDetails, parentCommentId);
+        Comment comment1 = commentService.getCommentById(parentCommentId);
+        return "redirect:/comment/" +parentCommentId;
     }
 
 }

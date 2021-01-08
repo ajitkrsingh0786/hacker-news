@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <style>
+        .votearrow {
+  width:      12px;
+  height:     12px;
+  border:     0px;
+  margin:     3px 2px 6px;
+  background: url("../images/grayarrow.gif")
+  no-repeat;
+}
+
+.votelinks.nosee div.votearrow.rotate180 {
+  display: none;
+}
+.votelinks {
+    min-width: 18px;
+}
+
+votelinks a {
+    display: block;
+    margin-bottom: 9px;
+}
+td[Attributes Style] {
+    vertical-align: top;
+}
+center {
+ margin-top: 1px;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<center>
+    <table id="hnmain" border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+        <tbody>
+        <tr>
+            <td bgcolor="#ff6600">
+                <div th:replace="html/header :: header"></div>
+            </td>
+        </tr>
+        <tr id="pagespace" title="Show" style="height:10px;"></tr>
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" class="itemlist">
+                    <tbody>
+                    <tr class="athing" id="25668757">
+                        <td class="ind"></td>
+                        <td valign="top" class="votelinks">
+                            <center>
+                                <a href="">
+                                    <div class="votearrow" title="upvote"></div>
+                                </a>
+                            </center>
+                        </td>
+                        <td class="default">
+                            <div style="margin-top:2px; margin-bottom:-10px;">
+                                <span class="comhead">
+                                   <a th:href="@{/userProfile/{userId}(userId=${parentComment.user.id})}" class="hnuser"
+                                      th:utext="${parentComment.user.username}"></a>
+                                    <span class="age">
+                                        <a href=" " th:utext="${parentComment.createdAt}"></a>
+                                    </span>
+                                    <span></span>
+                                    <span class="par" th:if="${parentComment.parentComment != null}"> |
+                                        <a th:href="@{/comment/{commentId}(commentId=${parentComment.parentComment.id})} ">parent</a>
+                                    </span>
+
+                                    <span class="storyon"> | on:
+                                       <span th:if="${parentComment.post.url != null  and parentComment.post.url !=''}">
+                                       <a th:href="@{${parentComment.post.url}}" class="storylink"
+                                          th:utext="${parentComment.post.title}"></a>
+                                       </span>
+                                        <span th:if="${parentComment.post.url == null  or parentComment.post.url ==''}">
+                                            <a th:href="@{/item/{postId}(postId=${parentComment.post.id})}"
+                                               th:utext="${parentComment.post.title}"></a>
+                                          </span>
+                                    </span>
+                             </span>
+                            </div>
+                            <br>
+                            <div class="comment">
+                                <span class="commtext c00" th:utext="${parentComment.message}"> </span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+             <table>
+                 <tbody>
+                    <tr class="spacer" style="height:15px"></tr>
+                    <tr>
+
+                        <td>
+                            <form action="#" th:action="@{/addReply/{parentCommentId}(parentCommentId=${parentComment.id})}" th:object="${comment}" method="POST">
+                                <textarea name="text" th:field="*{message}" rows="6" cols="60"></textarea>
+                                <br>
+                                <br>
+                                <br>
+                                <input type="submit" value="reply">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="height:12px;"></tr>
+                    <span th:if=" ${parentComment.childComments != null}">
+                    <span th:each="comment1 : ${parentComment.childComments}">
+                        <span th:if="${comment1.parentComment.id == parentComment.id}">
+                            <tr class="athing comtr " id="25639803">
+
+                                <td>
+                                  <table border="0">
+                                      <tbody>
+                                      <tr>
+
+                                          <td class="ind"><img src="s.gif" height="1" width="0"></td>
+                                          <span th:if="${likeCommentsId}">
+                                          <td valign="top" class="votelinks">
+                                              <center th:if="${not #arrays.contains(likeCommentsId,comment1.id)}">
+                                                  <a th:href="@{'/upVoteComment/?commentId='+${comment1.id}+'&goTo='+${#httpServletRequest.requestURI}}">
+                                                      <div class="votearrow" title="upvote"></div>
+                                                  </a>
+                                              </center>
+                                              <center th:if="${#arrays.contains(likeCommentsId,comment1.id)}">
+                                                  <a>
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  </a>
+                                              </center>
+                                          </td>
+                                          </span>
+                                          <td class="default">
+                                              <div style="margin-top:2px; margin-bottom:-10px;">
+                                                  <span class="comhead">
+                                                   <a th:href="@{/userProfile/{userId}(userId=${comment1.user.id})}" class="hnuser" th:utext="${comment1.user.username}"></a>
+                                                      <span class="age">
+                                                          <a href=" " th:utext="${comment1.createdAt}"></a>
+                                                      </span>
+<!--                                                      <span id="unv_25657047" th:if="${#arrays.contains(likeCommentsId,comment1.id)}"> |-->
+<!--                                                          <a th:href="@{'/downVoteComment/?commentId='+${comment1.id}+'&goTo='+${#httpServletRequest.requestURI}}" id='un_25657047'>unvote</a>-->
+<!--                                                      </span>-->
+                                                      <span id="unv_25639803"></span>
+                                                      <span class="par"></span>
+                                                      <span class="storyon"></span>
+                                                   </span>
+                                              </div><br>
+                                              <div class="comment">
+                                             <span class="commtext c00">
+                                                 <span th:utext="${comment1.message}"></span>
+                                            <div class="reply"> <p>
+                                                <font size="1">
+                                               <u><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}">reply</a></u>
+                                                 </font>
+                                               </p>
+                                            </div>
+                                             </span>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                       </tbody>
+                                  </table>
+                                </td>
+                            </tr>
+                            <!--                     <tr>-->
+                            <!--                         <td colspan="2">^.</td>-->
+                            <!--                         <td th:utext="${comment1.message}">-->
+                            <!--                     </tr>-->
+                            <!--                        <tr>-->
+                            <!--                            <td colspan="2"></td>-->
+                            <!--                            <td><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}" style="height:5px">reply</a></td>-->
+                            <!--                        </tr>-->
+                                                      <span th:insert="html/replyCommentsList :: replyComments" th:with="someVariable=${0}" ></span>
+                            <!--                         <tr class="spacer" style="height:5px"></tr>-->
+                    </span>
+                    </span>
+                    </span>
+                    </tbody>
+                </table>
+
+
+            </td>
+        </tr>
+        <tr style="height:12px;"></tr>
+        <tr class="spacer" style="height:5px"></tr>
+        <tr class="morespace" style="height:10px"></tr>
+<!--                <tr style="float:left;" th:if="${not isLast}">-->
+<!--                    <td colspan="2"></td>-->
+<!--                    <td class="title">-->
+<!--                        <a th:href="@{'/AllPost/'+${currentPage+1}}" class="morelink" rel="next">More</a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+        </tbody>
+
+        <tr>
+            <td>
+
+                <div th:replace="html/footer :: footer"></div>
+
+            </td>
+        </tr>
+
+    </table>
+</center>
+</body>
+</html>

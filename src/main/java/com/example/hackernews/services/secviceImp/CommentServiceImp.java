@@ -35,6 +35,11 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
+    @Override
     public void deleteCommentById(int id) {
 
     }
