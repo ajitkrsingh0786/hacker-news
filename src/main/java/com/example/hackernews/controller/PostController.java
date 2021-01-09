@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Calendar;
-import java.util.Date;
 
 @Controller
 public class PostController {
@@ -33,17 +31,12 @@ public class PostController {
 
     @RequestMapping("/")
     public String showHomePage(Model model, Principal principal) {
-        Date d = new Date(new Date().getTime());
-        System.out.println(d);
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.ZONE_OFFSET);
-        System.out.println(""+calendar.getTime());
-        return getAllPost(1, model, principal);
+        return findPaginated(1, model, principal);
     }
 
     @RequestMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model, Principal principal) {
-        postServiceImp.getAllPost(pageNo, model, principal);
+        postServiceImp.getAllPosts(pageNo, model, principal);
         return "html/index";
     }
 
@@ -82,8 +75,8 @@ public class PostController {
 
     @GetMapping("AllPost/{pageNo}")
     public String getAllPost(@PathVariable(value = "pageNo") int pageNo, Model model, Principal principal) {
-        postServiceImp.getAllPost(pageNo, model, principal);
-        return "html/index";
+        postServiceImp.getAllPostDesc(pageNo, model, principal);
+        return "html/newPost";
     }
 
     @RequestMapping("/showFormForUpdate/{postId}")
@@ -101,7 +94,7 @@ public class PostController {
 
     @RequestMapping("/news")
     public String news(Model model, Principal principal) {
-        return getAllPost(1, model, principal);
+        return findPaginated(1, model, principal);
     }
 
     @RequestMapping("/newest")

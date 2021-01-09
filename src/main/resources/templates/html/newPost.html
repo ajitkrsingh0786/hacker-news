@@ -19,7 +19,6 @@
   display: none;
 }
 
-
     </style>
 </head>
 <body>
@@ -43,7 +42,7 @@
         <tr style="float:left;" th:if="${not isLast}">
             <td colspan="2"></td>
             <td class="title">
-                <a  th:href="@{'/page/'+${currentPage+1}}" class="morelink" rel="next">More</a>
+                <a  th:href="@{'/AllPost/'+${currentPage+1}}" class="morelink" rel="next">More</a>
             </td>
         </tr>
         </tbody>

@@ -13,7 +13,9 @@ public interface PostService {
 
     Post getPost(String id);
 
-    void getAllPost(int pageNo, Model model, Principal principal);
+    void getAllPosts(int pageNo, Model model, Principal principal);
+
+    void getAllPostDesc(int pageNo, Model model, Principal principal);
 
     void updatePost(String title, String postId);
 

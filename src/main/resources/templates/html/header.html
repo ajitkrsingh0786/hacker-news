@@ -34,7 +34,6 @@
                           <a th:href="@{/userProfile/{userId}(userId=${#authentication.getPrincipal().getId()})}" th:text="${#authentication.getPrincipal().getUsername()}"></a> |
                           <a th:href="@{/logout}">logout</a>
                       </span>
-
                 <span class="pagetop" sec:authorize="isAnonymous()">
                           <a th:href="@{/login}">login</a>
                       </span>

@@ -78,8 +78,34 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public void getAllPost(int pageNo, Model model, Principal principal) {
+    public void getAllPosts(int pageNo, Model model, Principal principal) {
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Post> pages = postRepository.findAll(pageable);
+        model.addAttribute("posts", pages.getContent());
+        model.addAttribute("isLast", pages.isLast());
+        model.addAttribute("isFirst", pages.isFirst());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        model.addAttribute("hidePosts",new ArrayList<Integer>());
 
+        List<String> timeAgo = new ArrayList<>();
+        for(Post post : pages.getContent()){
+            PrettyTime prettyTime = new PrettyTime();
+            timeAgo.add(prettyTime.format(post.getCreatedAt()));
+        }
+        model.addAttribute("timeAgo",timeAgo);
+        if(principal!= null){
+            String username = principal.getName();
+            User user = userRepository.findByUsername(username).get();
+            List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
+            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
+            model.addAttribute("userLikes",userLikes);
+        }
+    }
+
+    @Override
+    public void getAllPostDesc(int pageNo, Model model, Principal principal) {
         int pageSize = 10;
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
         Page<Post> pages = postRepository.findAll(pageable);
