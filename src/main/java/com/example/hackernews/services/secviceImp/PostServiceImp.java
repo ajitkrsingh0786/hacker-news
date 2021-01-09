@@ -8,6 +8,8 @@ import com.example.hackernews.security.MyUserDetails;
 import com.example.hackernews.services.service.PostService;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.beans.support.SortDefinition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostServiceImp implements PostService {
@@ -80,56 +79,104 @@ public class PostServiceImp implements PostService {
     @Override
     public void getAllPosts(int pageNo, Model model, Principal principal) {
         int pageSize = 10;
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Post> pages = postRepository.findAll(pageable);
-        model.addAttribute("posts", pages.getContent());
-        model.addAttribute("isLast", pages.isLast());
-        model.addAttribute("isFirst", pages.isFirst());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", pages.getTotalPages());
+
         model.addAttribute("hidePosts",new ArrayList<Integer>());
 
-        List<String> timeAgo = new ArrayList<>();
-        for(Post post : pages.getContent()){
-            PrettyTime prettyTime = new PrettyTime();
-            timeAgo.add(prettyTime.format(post.getCreatedAt()));
-        }
-        model.addAttribute("timeAgo",timeAgo);
+        List<Integer> hidePostId = new ArrayList<>();
         if(principal!= null){
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
+            hidePostId = hideRepository.findAllByUserId(user.getId());
+            model.addAttribute("hidePosts",hidePostId);
             model.addAttribute("userLikes",userLikes);
         }
+
+        List<Post> posts = postRepository.findAll();
+        Iterator<Post> iterable = posts.iterator();
+
+        while (iterable.hasNext()){
+            Post post = iterable.next();
+            if(hidePostId.contains(post.getId())){
+                iterable.remove();
+            }
+        }
+
+        PagedListHolder<Post> page = new PagedListHolder<>(posts);
+        page.setPageSize(pageSize);
+        page.setPage(pageNo-1);
+
+        model.addAttribute("posts", page.getPageList());
+        model.addAttribute("isLast", page.isLastPage());
+        model.addAttribute("isFirst", page.isFirstPage());
+        model.addAttribute("currentPage", pageNo);
+
+        List<String> timeAgo = new ArrayList<>();
+        for(Post post : page.getPageList()){
+            PrettyTime prettyTime = new PrettyTime();
+            timeAgo.add(prettyTime.format(post.getCreatedAt()));
+        }
+        model.addAttribute("timeAgo",timeAgo);
     }
 
     @Override
     public void getAllPostDesc(int pageNo, Model model, Principal principal) {
         int pageSize = 10;
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("createdAt").descending());
-        Page<Post> pages = postRepository.findAll(pageable);
-
-        model.addAttribute("posts", pages.getContent());
-        model.addAttribute("isLast", pages.isLast());
-        model.addAttribute("isFirst", pages.isFirst());
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", pages.getTotalPages());
         model.addAttribute("hidePosts",new ArrayList<Integer>());
 
-        List<String> timeAgo = new ArrayList<>();
-        for(Post post : pages.getContent()){
-            PrettyTime prettyTime = new PrettyTime();
-            timeAgo.add(prettyTime.format(post.getCreatedAt()));
-        }
-        model.addAttribute("timeAgo",timeAgo);
+        List<Integer> hidePostId = new ArrayList<>();
         if(principal!= null){
             String username = principal.getName();
             User user = userRepository.findByUsername(username).get();
             List<Integer> userLikes = likeRepository.findAllByUserId(user.getId());
-            model.addAttribute("hidePosts",hideRepository.findAllByUserId(user.getId()));
+            hidePostId = hideRepository.findAllByUserId(user.getId());
+            model.addAttribute("hidePosts",hidePostId);
             model.addAttribute("userLikes",userLikes);
         }
+
+        List<Post> posts = postRepository.findAll();
+        Iterator<Post> iterable = posts.iterator();
+
+        while (iterable.hasNext()){
+            Post post = iterable.next();
+            if(hidePostId.contains(post.getId())){
+                iterable.remove();
+            }
+        }
+
+        PagedListHolder<Post> page = new PagedListHolder<>(posts);
+        page.setSort(new SortDefinition() {
+            @Override
+            public String getProperty() {
+                return "createdAt";
+            }
+
+            @Override
+            public boolean isIgnoreCase() {
+                return false;
+            }
+
+            @Override
+            public boolean isAscending() {
+                return false;
+            }
+        });
+        page.setPageSize(pageSize);
+
+        page.resort();
+        page.setPage(pageNo-1);
+
+        model.addAttribute("posts", page.getPageList());
+        model.addAttribute("isLast", page.isLastPage());
+        model.addAttribute("isFirst", page.isFirstPage());
+        model.addAttribute("currentPage", pageNo);
+
+        List<String> timeAgo = new ArrayList<>();
+        for(Post post : page.getPageList()){
+            PrettyTime prettyTime = new PrettyTime();
+            timeAgo.add(prettyTime.format(post.getCreatedAt()));
+        }
+        model.addAttribute("timeAgo",timeAgo);
     }
 
     @Override

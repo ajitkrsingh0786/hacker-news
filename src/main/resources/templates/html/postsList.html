@@ -13,7 +13,7 @@
             <div th:if="${not #arrays.contains(hidePosts,post.id)}">
                     <tr>
                         <td align="right" valign="top" class="title">
-                            <span class="rank" th:utext="${status.count}"></span>
+                            <span class="rank" th:utext="${(posts.indexOf(post)+1)+(currentPage-1)*10}"></span>
                             <span>.</span>
                         </td>
                         <td valign="top" class="votelinks">
