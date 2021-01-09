@@ -39,7 +39,7 @@
                         <td class="subtext">
                             <span class="score" th:utext="${post.point}">
 
-                            </span> by <a href=class="" th:utext="${post.user.username}"></a>
+                            </span> by <a th:href="@{/userProfile/{userId}(userId=${post.user.id})}" th:utext="${post.user.username}"></a>
                             <span class="age"><a href=" ">8 hours ago</a></span> <span
                                 id="unv_25576113"></span> | <a href="">hide</a> |
                             <a th:href="@{/addCommentForm/{postId}(postId=${post.id})}">comments</a>
