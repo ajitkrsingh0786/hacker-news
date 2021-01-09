@@ -18,11 +18,9 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam("searchKeyword") String searchKeyword,
-                             Model model){
-        model.addAttribute("posts",searchServiceImp.searchResult(searchKeyword,model));
-        model.addAttribute("sNo",1);
-
+    public String search(@RequestParam("searchKeyword") String searchKeyword, Model model) {
+        model.addAttribute("posts", searchServiceImp.searchResult(searchKeyword, model));
+        model.addAttribute("sNo", 1);
         return "html/searchResult";
     }
 }

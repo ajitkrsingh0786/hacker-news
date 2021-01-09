@@ -70,7 +70,6 @@ public class CommentController {
     @RequestMapping("/viewComments/{postId}")
     public String viewComments(@PathVariable(value = "postId") int postId, Model model) {
         Post post = postServiceImp.getPostById(postId);
-
         model.addAttribute("comments", commentService.getCommentsByPost(post));
         model.addAttribute("postId", postId);
         return "html/viewComments";

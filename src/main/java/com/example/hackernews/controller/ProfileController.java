@@ -19,14 +19,12 @@ public class ProfileController {
 
     @RequestMapping("/submissions")
     public String submissions(@RequestParam(name = "userId") String userId, Model model) {
-
         profileService.getAllSubmissions(userId, model);
         return "html/mySubmissions";
     }
 
     @RequestMapping("/upVotedSubmissions")
     public String upVotedSubmissions(@RequestParam(name = "userId") String userId, Model model) {
-
         profileService.getAllUpVotedSubmissions(userId, model);
         return "html/mySubmissions";
     }

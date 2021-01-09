@@ -30,10 +30,8 @@ public class Post {
 
     @Column(name = "created_at")
     Date createdAt;
-
     @Column(name = "updated_at")
     Date updatedAt;
-
     @JsonIgnore
     @JoinColumn(name = "user_id")
     @ManyToOne

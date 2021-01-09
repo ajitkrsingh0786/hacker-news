@@ -56,15 +56,15 @@ public class PostController {
     @RequestMapping("/deletePost/{postId}")
     public String deletePostForm(@PathVariable(value = "postId") int postId, Model model) {
         model.addAttribute("post", postServiceImp.getPostById(postId));
-        return  "html/deletePost";
+        return "html/deletePost";
     }
 
     @PostMapping("/delete/{postId}")
     public String deletePost(@PathVariable(value = "postId") int postId, @Param(value = "delete") String delete) {
-        if(delete.equals("Yes")){
+        if (delete.equals("Yes")) {
             postServiceImp.deletePost(postId);
         }
-        return  "redirect:/newest";
+        return "redirect:/newest";
     }
 
     @GetMapping("/getPost")
@@ -101,5 +101,4 @@ public class PostController {
     public String newest(Model model, Principal principal) {
         return getAllPost(1, model, principal);
     }
-
 }

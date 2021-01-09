@@ -24,20 +24,16 @@ public class HomeController {
     }
 
     @GetMapping("/welcome")
-    public String welcome(){
+    public String welcome() {
         return "html/welcome";
     }
 
-
     @GetMapping("/thread")
-    public String thread(Principal principal,
-                         Model model,
-                         @RequestParam(name = "pageNo") int pageNo){
+    public String thread(Principal principal, Model model, @RequestParam(name = "pageNo") int pageNo) {
 
-        if(principal != null){
-            homeService.findAllCommentByUsername(principal,model,pageNo);
+        if (principal != null) {
+            homeService.findAllCommentByUsername(principal, model, pageNo);
         }
         return "html/thread";
     }
-
 }

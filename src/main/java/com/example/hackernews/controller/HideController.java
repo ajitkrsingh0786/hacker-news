@@ -20,24 +20,22 @@ public class HideController {
     }
 
     @RequestMapping("/hidePost")
-    public String hidePost(@RequestParam(name = "postId") String postId,
-                           Principal principal,
-                           @RequestParam(name = "goTo") String goTo){
-        hideService.hidePost(postId,principal);
-        return "redirect:"+goTo;
+    public String hidePost(@RequestParam(name = "postId") String postId, Principal principal, @RequestParam(name =
+            "goTo") String goTo) {
+        hideService.hidePost(postId, principal);
+        return "redirect:" + goTo;
     }
 
     @RequestMapping("/unHidePost")
-    public String unHidePost(@RequestParam(name = "postId") String postId,
-                             Principal principal,
-                             @RequestParam(name = "goTo") String goTo){
-        hideService.unHidePost(postId,principal);
-        return "redirect:"+goTo;
+    public String unHidePost(@RequestParam(name = "postId") String postId, Principal principal, @RequestParam(name =
+            "goTo") String goTo) {
+        hideService.unHidePost(postId, principal);
+        return "redirect:" + goTo;
     }
 
     @RequestMapping("/hidden")
-    public String getHidden(Principal principal, Model model){
-        hideService.getHidden(principal,model);
+    public String getHidden(Principal principal, Model model) {
+        hideService.getHidden(principal, model);
         return "html/hiddenPost";
     }
 }

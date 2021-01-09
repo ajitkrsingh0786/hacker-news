@@ -26,11 +26,9 @@ public class UserController {
         return "html/login";
     }
 
-
     @PostMapping("/addUser")
-    public String addUser(@ModelAttribute User user,Model model) {
-        return userServiceImp.addUser(user,model);
-//        return "redirect:/";
+    public String addUser(@ModelAttribute User user, Model model) {
+        return userServiceImp.addUser(user, model);
     }
 
     @PostMapping("/deleteUser")
@@ -56,7 +54,6 @@ public class UserController {
         model.addAttribute("user", userServiceImp.getUserById(userId));
         model.addAttribute("successMessage", successMessage);
         return "html/changePassword";
-
     }
 
     @PostMapping("/update")
@@ -67,10 +64,9 @@ public class UserController {
 
     @RequestMapping("/userProfile/{userId}")
     public String userProfile(Model model, @PathVariable(value = "userId") int userId, Principal principal) {
-        System.out.println(userId);
         User user = userServiceImp.getUserById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("principal",principal);
+        model.addAttribute("principal", principal);
         return "html/userProfile";
     }
 }
