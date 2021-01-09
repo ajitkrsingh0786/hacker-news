@@ -145,7 +145,7 @@
                                     <u>upvoted submissions</u>
                                 </a> /
 <!--                                TODO ->BY AJIT-->
-                                <a href="#">
+                                <a th:href="@{/userComments/{userId}(userId=${user.id})}">
                                     <u>comments</u>
                                 </a>
                                 &nbsp;
@@ -169,7 +169,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <a href="">
+                                    <a th:href="@{/userComments/{userId}(userId=${user.id})}">
                                         <u>comments</u>
                                     </a>
                                 </td>

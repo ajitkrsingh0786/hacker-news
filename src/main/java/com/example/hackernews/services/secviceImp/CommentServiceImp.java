@@ -51,6 +51,11 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
+    public List<Comment> getCommentByUser(User user) {
+        return commentRepository.findByUser(user);
+    }
+
+    @Override
     public void saveReplyComment(Comment comment, MyUserDetails userDetails, int parentCommentId) {
         Comment parentComment = commentRepository.findById(parentCommentId).get();
         comment.setPost(parentComment.getPost());

@@ -96,6 +96,7 @@
                         <td>
                             <form action="#" th:action="@{/addReply/{parentCommentId}(parentCommentId=${parentComment.id})}" th:object="${comment}" method="POST">
                                 <textarea name="text" th:field="*{message}" rows="6" cols="60"></textarea>
+                                <input type="hidden" name="action" th:value="${action}">
                                 <br>
                                 <br>
                                 <br>

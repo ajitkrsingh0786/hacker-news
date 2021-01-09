@@ -105,6 +105,7 @@ center {
                                 <br>
                                 <br>
                                 <br>
+                                <input type="hidden" name="action" value="comment">
                                 <input type="submit" value="reply">
                             </form>
                         </td>
@@ -155,7 +156,7 @@ center {
                                                  <span th:utext="${comment1.message}"></span>
                                             <div class="reply"> <p>
                                                 <font size="1">
-                                               <u><a th:href="@{/replyComment/{commentId}(commentId=${comment1.id})}">reply</a></u>
+                                               <u><a th:href="@{'/replyComment/{commentId}?action='+${action}(commentId=${comment1.id})}">reply</a></u>
                                                  </font>
                                                </p>
                                             </div>
